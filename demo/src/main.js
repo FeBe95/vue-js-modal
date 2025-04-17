@@ -1,15 +1,14 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import VueJsModal from 'plugin'
 import App from './App.vue'
 
-Vue.use(VueJsModal, {
-  dialog: true,
-  dynamicDefaults: {
-    draggable: true
-  }
-})
+const app = createApp(App)
 
-new Vue({
-  el: '#app',
-  render: h => h(App)
-})
+// app.use(VueJsModal, {
+//   dialog: true,
+//   dynamicDefaults: {
+//     draggable: true
+//   }
+// })
+
+app.mount('#app')
