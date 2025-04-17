@@ -39,6 +39,7 @@ module.exports = {
   },
   resolve: {
     alias: {
+      vue: '@vue/compat',
       vue$: 'vue/dist/vue.esm.js',
       plugin: path.resolve(__dirname, '../dist/index.js')
     }
