@@ -28,15 +28,15 @@
     "url": "https://github.com/euvl/vue-js-modal/issues"
   },
   "scripts": {
-    "build:client": "webpack --config ./build/webpack.client.config.js --progress --hide-modules",
-    "build:client-no-css": "webpack --config ./build/webpack.client-no-css.config.js --progress --hide-modules",
-    "build:ssr": "webpack --config ./build/webpack.ssr.config.js --progress --hide-modules",
-    "build:ssr-no-css": "webpack --config ./build/webpack.ssr-no-css.config.js --progress --hide-modules",
+    "build:client": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --config ./build/webpack.client.config.js --progress --hide-modules",
+    "build:client-no-css": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --config ./build/webpack.client-no-css.config.js --progress --hide-modules",
+    "build:ssr": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --config ./build/webpack.ssr.config.js --progress --hide-modules",
+    "build:ssr-no-css": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --config ./build/webpack.ssr-no-css.config.js --progress --hide-modules",
     "lint:js": "eslint --ext js --ext jsx --ext vue src",
     "lint:js:fix": "npm run lint:js -- --fix",
     "test": "jest",
     "build": "npm run build:client && npm run build:client-no-css && npm run build:ssr && npm run build:ssr-no-css",
-    "watch": "webpack --config ./build/webpack.client.config.js --progress --hide-modules --watch",
+    "watch": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --config ./build/webpack.client.config.js --progress --hide-modules --watch",
     "test:types": "tsc -p types/test",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
@@ -51,6 +51,7 @@
     "@vue/test-utils": "1.0.0-beta.31",
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.4",
+    "cross-env": "^7.0.3",
     "css-loader": "^1.0.1",
     "eslint": "^6.7.2",
     "eslint-plugin-babel": "^5.3.0",
