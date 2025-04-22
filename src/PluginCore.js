@@ -1,9 +1,15 @@
+import emitter from 'tiny-emitter/instance'
 import { UNSUPPORTED_ARGUMENT_ERROR } from './utils/errors'
 import { createDivInBody } from './utils'
 import ModalsContainer from './components/ModalsContainer.vue'
 
 const PluginCore = (Vue, options = {}) => {
-  const subscription = new Vue()
+  const subscription = {
+    $on: (...args) => emitter.on(...args),
+    $once: (...args) => emitter.once(...args),
+    $off: (...args) => emitter.off(...args),
+    $emit: (...args) => emitter.emit(...args)
+  }
 
   const context = {
     root: null,

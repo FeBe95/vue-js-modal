@@ -81,6 +81,7 @@
   },
   "dependencies": {
     "@vue/compat": "^3.5.13",
-    "resize-observer-polyfill": "^1.5.1"
+    "resize-observer-polyfill": "^1.5.1",
+    "tiny-emitter": "^2.1.0"
   }
 }
