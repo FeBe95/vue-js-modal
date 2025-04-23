@@ -225,7 +225,7 @@ $facebook_color: #3880ff;
   transition: all 0.5s;
 }
 
-.pop-out-enter,
+.pop-out-enter-from,
 .pop-out-leave-active {
   opacity: 0;
   transform: translateY(24px);

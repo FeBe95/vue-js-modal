@@ -50,7 +50,7 @@ export default {
   transition: all 0.5s;
 }
 
-.scale-enter,
+.scale-enter-from,
 .scale-leave-active {
   opacity: 0;
   transform: scale(0.3) translateY(24px);
