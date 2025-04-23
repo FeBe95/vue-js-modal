@@ -3,14 +3,6 @@ export * from './numbers'
 const INPUT_NODE_NAMES = ['INPUT', 'TEXTAREA', 'SELECT']
 
 export const generateId = ((index = 0) => () => (index++).toString())()
-/**
- * @param {Number} from  Lower limit
- * @param {Number} to    Upper limit
- * @param {Number} value Checked number value
- *
- * @return {Number} Either source value itself or limit value if range limits
- * are exceeded
- */
 
 export const createDivInBody = () => {
   const div = document.createElement('div')
