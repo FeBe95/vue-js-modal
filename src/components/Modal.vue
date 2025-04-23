@@ -77,6 +77,7 @@ const TransitionState = {
 
 export default {
   name: 'VueJsModal',
+  emits: ['before-open', 'opened', 'before-close', 'closed', 'resize'],
   props: {
     name: {
       required: true,

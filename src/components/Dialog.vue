@@ -39,6 +39,7 @@
 <script>
 export default {
   name: 'VueJsDialog',
+  emits: ['before-opened', 'opened', 'before-closed', 'closed'],
   props: {
     width: {
       type: [Number, String],
