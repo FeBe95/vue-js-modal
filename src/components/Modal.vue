@@ -902,7 +902,7 @@ export default {
   transition: all 50ms;
 }
 
-.vm-transition--overlay-enter,
+.vm-transition--overlay-enter-from,
 .vm-transition--overlay-leave-active {
   opacity: 0;
 }
@@ -912,7 +912,7 @@ export default {
   transition: all 400ms;
 }
 
-.vm-transition--modal-enter,
+.vm-transition--modal-enter-from,
 .vm-transition--modal-leave-active {
   opacity: 0;
   transform: translateY(-20px);
@@ -923,7 +923,7 @@ export default {
   transition: all 2ms;
 }
 
-.vm-transition--default-enter,
+.vm-transition--default-enter-from,
 .vm-transition--default-leave-active {
   opacity: 0;
 }
