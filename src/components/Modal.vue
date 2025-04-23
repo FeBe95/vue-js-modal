@@ -264,7 +264,7 @@ export default {
   /**
    * Removes global listeners
    */
-  beforeDestroy() {
+  beforeUnmount() {
     this.$modal.subscription.$off('toggle', this.onToggle)
 
     window.removeEventListener('resize', this.onWindowResize)
