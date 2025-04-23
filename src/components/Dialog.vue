@@ -31,7 +31,7 @@
         :key="index"
         v-html="button.title"
         @click.stop="click(index, $event)"
-      >{{ button.title }}</button>
+      />
     </div>
     <div v-else class="vue-dialog-buttons-none" />
   </component>
