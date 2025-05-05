@@ -17,6 +17,7 @@
 </template>
 <script>
 import { generateId } from '../utils'
+import { markRaw } from 'vue'
 
 const PREFIX = 'dynamic_modal_'
 
@@ -46,7 +47,7 @@ export default {
         id,
         modalAttrs: { ...modalAttrs, name },
         modalListeners,
-        component,
+        component: markRaw(component),
         componentAttrs
       })
 
