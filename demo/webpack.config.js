@@ -40,7 +40,6 @@ module.exports = {
   },
   resolve: {
     alias: {
-      vue: '@vue/compat',
       vue$: path.resolve(__dirname, './node_modules/vue/dist/vue.esm-bundler.js'),
       plugin: path.resolve(__dirname, '../dist/index.js')
     }
