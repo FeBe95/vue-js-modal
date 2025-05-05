@@ -1,5 +1,4 @@
 <template>
-  <div id="app">
     <!-- Modals -->
     <demo-error-modal />
     <demo-login-modal />
@@ -57,7 +56,6 @@
         @click="showDynamicComponentModalWithModalParams"
       >Dynamic: Component Modal with modal params</button>
     </div>
-  </div>
 </template>
 
 <script>
