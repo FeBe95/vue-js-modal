@@ -13,6 +13,9 @@ module.exports = {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/dist/'
   },
+  externals: {
+    vue: 'vue',
+  },
   resolve: {
     extensions: ['.ts', '.js']
   },

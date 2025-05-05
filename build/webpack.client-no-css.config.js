@@ -15,6 +15,9 @@ module.exports = {
     publicPath: '/dist/',
     filename: 'index.nocss.js'
   },
+  externals: {
+    vue: 'vue',
+  },
   resolve: {
     extensions: ['.js']
   },
