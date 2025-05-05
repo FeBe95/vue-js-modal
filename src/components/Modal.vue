@@ -499,7 +499,6 @@ export default {
 
     beforeModalTransitionLeave() {
       this.modalTransitionState = TransitionState.Leaving
-      this.resizeObserver.unobserve(this.$refs.modal)
 
       if (this.$focusTrap.enabled()) {
         this.$focusTrap.disable()
@@ -720,6 +719,8 @@ export default {
       if (cancelEvent) {
         return
       }
+
+      this.resizeObserver.unobserve(this.$refs.modal)
 
       this.startTransitionLeave()
     },
