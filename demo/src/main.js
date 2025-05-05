@@ -4,11 +4,11 @@ import App from './App.vue'
 
 const app = createApp(App)
 
-// app.use(VueJsModal, {
-//   dialog: true,
-//   dynamicDefaults: {
-//     draggable: true
-//   }
-// })
+app.use(VueJsModal, {
+  dialog: true,
+  dynamicDefaults: {
+    draggable: true
+  }
+})
 
 app.mount('#app')
