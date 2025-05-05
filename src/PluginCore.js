@@ -2,8 +2,9 @@ import emitter from 'tiny-emitter/instance'
 import { UNSUPPORTED_ARGUMENT_ERROR } from './utils/errors'
 import { createDivInBody } from './utils'
 import ModalsContainer from './components/ModalsContainer.vue'
+import { createVNode, render } from 'vue'
 
-const PluginCore = (Vue, options = {}) => {
+const PluginCore = (app, options = {}) => {
   const subscription = {
     $on: (...args) => emitter.on(...args),
     $once: (...args) => emitter.once(...args),
@@ -15,6 +16,10 @@ const PluginCore = (Vue, options = {}) => {
     root: null,
     componentName: options.componentName || 'Modal'
   }
+
+  subscription.$on('set-modal-container', (container) => {
+    context.root.__modalContainer = container
+  })
 
   const showStaticModal = (name, params) => {
     subscription.$emit('toggle', name, true, params)
@@ -39,18 +44,16 @@ const PluginCore = (Vue, options = {}) => {
 
   /**
    * Creates a container for modals in the root Vue component.
-   *
-   * @param {Vue} parent
    */
-  const setDynamicModalContainer = parent => {
-    context.root = parent
+  const setDynamicModalContainer = () => {
+    context.root = {}
 
     const element = createDivInBody()
 
-    new Vue({
-      parent,
-      render: h => h(ModalsContainer)
-    }).$mount(element)
+    const vNode = createVNode(ModalsContainer)
+    vNode.appContext = app._context
+
+    render(vNode, element);
   }
 
   const show = (...args) => {

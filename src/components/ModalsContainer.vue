@@ -31,7 +31,7 @@ export default {
     /**
      * Register ModalContainer so that it was availiable inside the plugin
      */
-    this.$root.__modalContainer = this
+    this.$modal.subscription.$emit('set-modal-container', this)
   },
   mounted() {
     this.$modal.subscription.$on('hide-all', () => {
