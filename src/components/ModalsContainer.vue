@@ -1,5 +1,4 @@
 <template>
-  <div id="modals-container">
     <modal
       v-for="modal in modals"
       :key="modal.id"
@@ -13,7 +12,6 @@
         @close="$modal.hide(modal.modalAttrs.name, $event)"
       />
     </modal>
-  </div>
 </template>
 <script>
 import { generateId } from '../utils'
