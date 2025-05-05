@@ -10,7 +10,6 @@
       <component
         :is="modal.component"
         v-bind="modal.componentAttrs"
-        v-on="$listeners"
         @close="$modal.hide(modal.modalAttrs.name, $event)"
       />
     </modal>
