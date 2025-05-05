@@ -71,7 +71,6 @@
     "vue-jest": "^5.0.0-alpha.10",
     "vue-loader": "^17.4.2",
     "vue-style-loader": "^4.1.2",
-    "vuepress": "^1.5.2",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-merge": "^4.2.2"
