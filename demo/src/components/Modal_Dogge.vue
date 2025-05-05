@@ -6,13 +6,14 @@
     :height="260"
     :width="260"
   >
-    <div 
-      slot="top-right"
-      class="ct-top-right"
-      @click="$modal.hide('dog-profile')"
-    >
-      Slot for close button
-    </div>
+    <template #top-right>
+      <div
+        class="ct-top-right"
+        @click="$modal.hide('dog-profile')"
+      >
+        Slot for close button
+      </div>
+    </template>
     <img src="/static/cute_dog.gif" />
   </modal>
 </template>
