@@ -140,7 +140,8 @@ export default {
       default: () => []
     },
     styles: {
-      type: [String, Array, Object]
+      type: [String, Array, Object],
+      default: ''
     },
     minWidth: {
       type: Number,
@@ -589,9 +590,6 @@ export default {
      * This method shifts the modal in the x direction.
      */
     getResizedShiftLeft(event) {
-      const { viewportHeight, viewportWidth, trueModalWidth, trueModalHeight } =
-        this
-
       let result = this.shiftLeft
 
       switch (event.direction) {
@@ -619,9 +617,6 @@ export default {
      * This method shifts the modal in the y direction.
      */
     getResizedShiftTop(event) {
-      const { viewportHeight, viewportWidth, trueModalWidth, trueModalHeight } =
-        this
-
       let result = this.shiftTop
 
       switch (event.direction) {

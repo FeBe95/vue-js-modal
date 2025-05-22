@@ -58,7 +58,8 @@ export default {
       default: true
     },
     transition: {
-      type: String
+      type: String,
+      default: ''
     }
   },
   data() {

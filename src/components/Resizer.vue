@@ -49,6 +49,7 @@ export default {
       required: true
     }
   },
+  emits: ['resize', 'resize-stop'],
   data() {
     return {
       clicked: false,
