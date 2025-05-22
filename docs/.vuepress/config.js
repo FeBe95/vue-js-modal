@@ -6,8 +6,9 @@ import sidebar from './sidebar'
 
 export default defineUserConfig({
   bundler: webpackBundler(),
-  base: '/vue-js-modal/',
-  title: 'Vue.js Modal',
+  base: '/vue-js-modal/docs/',
+  title: 'Vue.js Modal (Vue 3)',
+  port: 8081,
   description: 'Simple, flexible, Vue.js modal plugin',
   plugins: [searchPlugin()],
   theme: defaultTheme({
