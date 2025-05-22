@@ -15,6 +15,7 @@ export default defineUserConfig({
     sidebar,
     navbar: [
       { text: 'Github', link: 'https://github.com/febe95/vue-js-modal' },
+      { text: 'Vue 2', link: 'https://euvl.github.io/vue-js-modal/' },
       { text: 'Examples', link: '/examples/' }
     ]
   })
