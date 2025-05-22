@@ -1,17 +1,17 @@
 <template>
-    <modal
-      v-for="modal in modals"
-      :key="modal.id"
-      v-bind="modal.modalAttrs"
-      v-on="modal.modalListeners"
-      @closed="remove(modal.id)"
-    >
-      <component
-        :is="modal.component"
-        v-bind="modal.componentAttrs"
-        @close="$modal.hide(modal.modalAttrs.name, $event)"
-      />
-    </modal>
+  <modal
+    v-for="modal in modals"
+    :key="modal.id"
+    v-bind="modal.modalAttrs"
+    v-on="modal.modalListeners"
+    @closed="remove(modal.id)"
+  >
+    <component
+      :is="modal.component"
+      v-bind="modal.componentAttrs"
+      @close="$modal.hide(modal.modalAttrs.name, $event)"
+    />
+  </modal>
 </template>
 <script>
 import { generateId } from '../utils'
@@ -54,7 +54,7 @@ export default {
       })
     },
     remove(id) {
-      const index = this.modals.findIndex(v => v.id === id)
+      const index = this.modals.findIndex((v) => v.id === id)
 
       if (index !== -1) {
         this.modals.splice(index, 1)

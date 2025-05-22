@@ -11,7 +11,7 @@ const Plugin = {
     const plugin = new PluginCore(app, options)
 
     Object.defineProperty(app.config.globalProperties, '$modal', {
-      get: function() {
+      get: function () {
         if (!plugin.context.root) {
           plugin.setDynamicModalContainer()
         }
@@ -29,8 +29,8 @@ const Plugin = {
      * Registration of <Dialog/> component
      */
     if (options.dialog) {
-      const componentName = options.dialogComponentName || 'VDialog';
-      app.component(componentName, Dialog);
+      const componentName = options.dialogComponentName || 'VDialog'
+      app.component(componentName, Dialog)
     }
   }
 }

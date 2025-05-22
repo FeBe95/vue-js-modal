@@ -53,7 +53,7 @@ const PluginCore = (app, options = {}) => {
     const vNode = createVNode(ModalsContainer)
     vNode.appContext = app._context
 
-    render(vNode, element);
+    render(vNode, element)
   }
 
   const show = (...args) => {

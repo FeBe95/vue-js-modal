@@ -2,11 +2,15 @@ export * from './numbers'
 
 const INPUT_NODE_NAMES = ['INPUT', 'TEXTAREA', 'SELECT']
 
-export const generateId = ((index = 0) => () => (index++).toString())()
+export const generateId = (
+  (index = 0) =>
+  () =>
+    (index++).toString()
+)()
 
 export const createDivInBody = () => {
   const div = document.createElement('div')
-  div.id = 'modals-container';
+  div.id = 'modals-container'
   document.body.appendChild(div)
 
   return div
@@ -36,13 +40,13 @@ export const windowWidthWithoutScrollbar = () => {
   return clientWidth || innerWidth
 }
 
-export const stringStylesToObject = styles => {
+export const stringStylesToObject = (styles) => {
   const lines = styles
     .split(';')
-    .map(line => line.trim())
+    .map((line) => line.trim())
     .filter(Boolean)
 
-  const entries = lines.map(line => line.split(':'))
+  const entries = lines.map((line) => line.split(':'))
 
   return entries.reduce((styles, [key, value]) => {
     return {
@@ -52,10 +56,10 @@ export const stringStylesToObject = styles => {
   }, {})
 }
 
-export const isInput = element => {
+export const isInput = (element) => {
   return element && INPUT_NODE_NAMES.indexOf(element.nodeName) !== -1
 }
 
-export const getTouchEvent = event => {
+export const getTouchEvent = (event) => {
   return event.touches && event.touches.length > 0 ? event.touches[0] : event
 }
