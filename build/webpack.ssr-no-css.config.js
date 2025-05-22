@@ -2,7 +2,6 @@ const path = require('path')
 const TerserPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
-const webpack = require('webpack')
 
 module.exports = {
   mode: 'production',
@@ -45,8 +44,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.IgnorePlugin(/^node:/),
-    // new webpack.NormalModuleReplacementPlugin(/^node:stream$/, 'stream'),
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
       filename: 'styles.css'
