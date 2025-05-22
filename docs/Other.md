@@ -2,13 +2,13 @@
 
 ## Sponsorship
 
-Please consider sponsoring this project through [Github Sponsorship](https://github.com/sponsors/euvl) :pray:
+Please consider sponsoring this project through [Github Sponsorship](https://github.com/sponsors/febe95) :pray:
 
 ## Development
 
 ```bash
 # Clone repo
-git clone https://github.com/euvl/vue-js-modal.git
+git clone https://github.com/febe95/vue-js-modal.git
 
 # Run unit tests
 npm run unit

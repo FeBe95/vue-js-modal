@@ -150,7 +150,7 @@ Supported string values are `<number>%` and `<number>px`
 
 ::: warning Note
 This is not CSS size value, it does not support `em`, `pem`, etc. Plugin requires pixels to recalculate position and size for draggable, resaziable modal.
-If you need to use more value types, please consider contributing to the parser [here](https://github.com/euvl/vue-js-modal/blob/master/src/utils/parser.js).
+If you need to use more value types, please consider contributing to the parser [here](https://github.com/febe95/vue-js-modal/blob/master/src/utils/parser.js).
 :::
 
 ---
@@ -163,7 +163,7 @@ Supported string values are `<number>%`, `<number>px` and `auto`. Setting height
 
 ::: warning Note
 This is not CSS size value, it does not support `em`, `pem`, etc. Plugin requires pixels to recalculate position and size for draggable, resaziable modal.
-If you need to use more value types, please consider contributing to the parser [here](https://github.com/euvl/vue-js-modal/blob/master/src/utils/parser.js).
+If you need to use more value types, please consider contributing to the parser [here](https://github.com/febe95/vue-js-modal/blob/master/src/utils/parser.js).
 :::
 
 ---
