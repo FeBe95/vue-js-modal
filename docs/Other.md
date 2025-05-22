@@ -27,15 +27,6 @@ npm install
 npm run dev
 ```
 
-## Check out
-
-Check out my other projects:
-
-* https://github.com/euvl/vue-notification
-* https://github.com/euvl/vue-js-toggle-button
-* https://github.com/euvl/vue-js-popover
-* https://github.com/euvl/v-clipboard
-
 ## IE support
 
 This plugin uses arrow functions, resize observer and other modern features.
