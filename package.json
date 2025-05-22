@@ -1,21 +1,23 @@
 {
-  "name": "vue-js-modal",
+  "name": "@febe95/vue-js-modal",
   "description": "Modal Component for Vue.js",
-  "version": "2.0.1",
-  "author": "euvl <yev.dev@gmail.com>",
+  "version": "3.0.0",
+  "author": "febe95 <mail@felix-bernhard.com>",
   "main": "dist/index.js",
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/euvl/vue-js-modal.git"
+    "url": "git+https://github.com/febe95/vue-js-modal.git"
   },
   "types": "types/index.d.ts",
   "keywords": [
     "front-end",
     "web",
     "vue",
+    "vue3",
+    "vue-3",
     "vuejs",
     "vue-js",
     "dialog",
@@ -24,8 +26,9 @@
     "vue-js-modal",
     "vue-modal"
   ],
+  "homepage": "https://github.com/febe95/vue-js-modal#readme",
   "bugs": {
-    "url": "https://github.com/euvl/vue-js-modal/issues"
+    "url": "https://github.com/febe95/vue-js-modal/issues"
   },
   "scripts": {
     "build:client": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --config ./build/webpack.client.config.js --progress --hide-modules",
