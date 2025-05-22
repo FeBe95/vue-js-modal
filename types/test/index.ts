@@ -1,15 +1,17 @@
-import Vue from "vue";
+import { createApp } from "vue";
 import VueJSModal, { VueJSModalOptions } from "../index";
 
-Vue.use(VueJSModal);
-Vue.use<VueJSModalOptions>(VueJSModal, {
+const app = createApp({
+  template: `<vue-modal name="awesome-modal"></vue-modal>`
+});
+
+app.use(VueJSModal);
+app.use<VueJSModalOptions>(VueJSModal, {
   componentName: "another-modal-name",
   dialog: false
 });
 
-const vm = new Vue({
-  template: `<vue-modal name="awesome-modal"></vue-modal>`
-}).$mount("#app");
+const vm = app.mount("#app");
 
 vm.$modal.show("awesome-modal");
 vm.$modal.hide("awesome-modal", { customeEvent: "customEventParam" });
