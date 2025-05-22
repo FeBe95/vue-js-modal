@@ -17,7 +17,6 @@ const PluginCore = (Vue, options = {}) => {
   const showDynamicModal = (
     component,
     componentProps,
-    componentSlots,
     modalProps = {},
     modalEvents
   ) => {
@@ -27,7 +26,6 @@ const PluginCore = (Vue, options = {}) => {
     container?.add(
       component,
       componentProps,
-      componentSlots,
       { ...defaults, ...modalProps },
       modalEvents
     )

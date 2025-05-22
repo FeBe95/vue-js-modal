@@ -9,7 +9,3 @@ export const isObject = value => {
 export const isFn = value => {
   return typeof value === 'function'
 }
-
-export const isFunction = value => {
-  return typeof value === 'function'
-}
