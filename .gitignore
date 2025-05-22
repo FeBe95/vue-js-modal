@@ -4,5 +4,4 @@
 *.map
 node_modules/
 npm-debug.log
-demo/dist/*
 docs/.vuepress/dist
