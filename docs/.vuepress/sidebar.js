@@ -1,7 +1,6 @@
-module.exports = [
+export default [
   {
-    title: 'Guide',
-    collapsable: false,
+    text: 'Guide',
     children: [
       '/Installation',
       '/Intro',
