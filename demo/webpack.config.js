@@ -46,9 +46,11 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
-    noInfo: true
+    static: {
+      directory: path.join(__dirname, '/')
+    }
   },
-  devtool: '#eval-source-map',
+  devtool: 'eval-source-map',
   plugins: [
     new webpack.DefinePlugin({
       __VUE_OPTIONS_API__: 'true',
