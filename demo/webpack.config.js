@@ -1,4 +1,6 @@
 const path = require('path')
+const TerserPlugin = require('terser-webpack-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 const webpack = require('webpack')
 
@@ -43,6 +45,18 @@ module.exports = {
       vue$: path.resolve(__dirname, './node_modules/vue/dist/vue.esm-bundler.js'),
       plugin: path.resolve(__dirname, '../dist/index.js')
     }
+  },
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        extractComments: false,
+        parallel: true,
+        terserOptions: {
+          sourceMap: true
+        }
+      }),
+      new CssMinimizerPlugin()
+    ]
   },
   devServer: {
     historyApiFallback: true,
