@@ -1,60 +1,11 @@
-const path = require('path')
-const TerserPlugin = require('terser-webpack-plugin')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { VueLoaderPlugin } = require('vue-loader')
+const { merge } = require('webpack-merge')
+const baseNoCss = require('./webpack.base-no-css.config')
 
-module.exports = {
-  mode: 'production',
-  entry: path.resolve(__dirname, '../src/index.js'),
-  devtool: 'source-map',
+/** @type {import('webpack').Configuration} */
+const webpackConfig = merge(baseNoCss, {
   output: {
-    library: 'vue-js-modal',
-    libraryTarget: 'umd',
-    path: path.resolve(__dirname, '../dist'),
-    publicPath: '/dist/',
     filename: 'index.nocss.js'
-  },
-  externals: {
-    vue: 'vue',
-  },
-  resolve: {
-    extensions: ['.js']
-  },
-  optimization: {
-    minimizer: [
-      new TerserPlugin({
-        cache: true,
-        extractComments: false,
-        parallel: true,
-        sourceMap: true
-      }),
-      new OptimizeCSSAssetsPlugin({
-        canPrint: true
-      })
-    ]
-  },
-  module: {
-    rules: [
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader'
-      },
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/
-      },
-      {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
-      }
-    ]
-  },
-  plugins: [
-    new VueLoaderPlugin(),
-    new MiniCssExtractPlugin({
-      filename: 'styles.css'
-    })
-  ]
-}
+  }
+})
+
+module.exports = webpackConfig

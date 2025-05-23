@@ -1,8 +1,9 @@
-var merge = require('webpack-merge')
-var baseConfig = require('./webpack.base.config')
+const { merge } = require('webpack-merge')
+const base = require('./webpack.base.config')
 
-var webpackConfig = merge(baseConfig, {
-  devtool: '#inline-source-map'
+/** @type {import('webpack').Configuration} */
+const webpackConfig = merge(base, {
+  devtool: 'inline-source-map'
 })
 
 delete webpackConfig.entry
