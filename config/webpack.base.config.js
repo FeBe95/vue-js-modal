@@ -33,6 +33,7 @@ const webpackConfig = {
         extractComments: false,
         parallel: true,
         terserOptions: {
+          module: false,
           sourceMap: true
         }
       }),
