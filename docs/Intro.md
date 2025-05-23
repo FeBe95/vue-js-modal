@@ -105,9 +105,9 @@ this.$modal.show({
 It is possible to set default property values for dynamic modals:
 
 ```js{4-8}
-import VModal from 'vue-js-modal'
+import VModal from '@febe95/vue-js-modal'
 
-Vue.use(VModal, {
+app.use(VModal, {
   dynamicDefaults: {
     draggable: true,
     resizable: true,
@@ -121,7 +121,7 @@ Vue.use(VModal, {
 Dialog is a simplified version of the modal which has most parameters set by default and is useful for quick prototyping, alerts, etc. Dialog is merely an example of how easy it is to create modals that fit your project needs. Nevertheless, you can use it if you set `dialog: true` in plugin configuration:
 
 ```js
-Vue.use(VModal, { dialog: true })
+app.use(VModal, { dialog: true })
 ```
 
 And include this component in your project:

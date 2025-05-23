@@ -10,11 +10,11 @@ Please consider sponsoring this project through [Github Sponsorship](https://git
 # Clone repo
 git clone https://github.com/febe95/vue-js-modal.git
 
-# Run unit tests
-npm run unit
+# Run tests
+npm run test
 
 # Run linter
-npm run lint
+npm run lint:js
 
 # Build main library for client & SSR
 cd vue-js-modal
