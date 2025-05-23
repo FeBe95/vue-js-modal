@@ -9,6 +9,7 @@
       <div class="links">
         <button class="button--green" @click="click">Show modal</button>
       </div>
+      <p style="margin-top: 40px">{{ renderMode }}</p>
     </div>
   </div>
 </template>
@@ -19,6 +20,13 @@ import ExampleModal from '../components/ExampleModal'
 export default {
   components: {
     ExampleModal
+  },
+  computed: {
+    renderMode() {
+      return this.$nuxt.payload.serverRendered
+        ? 'Server-Side Rendering'
+        : 'Client-Side Rendering'
+    }
   },
   methods: {
     click() {

@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_OPTIONS=--openssl-legacy-provider nuxt",
-    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider nuxt build",
-    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider nuxt start",
-    "export": "cross-env NODE_OPTIONS=--openssl-legacy-provider nuxt export",
-    "serve": "cross-env NODE_OPTIONS=--openssl-legacy-provider nuxt serve",
+    "dev:ssr": "cross-env NODE_OPTIONS=--openssl-legacy-provider NUXT_RENDERING_MODE=ssr nuxt dev --open",
+    "build:ssr": "cross-env NODE_OPTIONS=--openssl-legacy-provider NUXT_RENDERING_MODE=ssr nuxt build",
+    "dev:csr": "cross-env NODE_OPTIONS=--openssl-legacy-provider NUXT_RENDERING_MODE=csr nuxt dev --open",
+    "build:csr": "cross-env NODE_OPTIONS=--openssl-legacy-provider NUXT_RENDERING_MODE=csr nuxt build",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint": "yarn lint:js"
   },
