@@ -1,11 +1,7 @@
 # Installation
 
 ```bash
-npm install vue-js-modal --save
-```
-
-```bash
-yarn add vue-js-modal
+npm install @febe95/vue-js-modal --save
 ```
 
 ## Client
@@ -13,16 +9,16 @@ yarn add vue-js-modal
 Import plugin in your main file:
 
 ```js
-import VModal from 'vue-js-modal'
+import VModal from '@febe95/vue-js-modal'
 
 OR
 
-import VModal from 'vue-js-modal/dist/index.nocss.js'
-import 'vue-js-modal/dist/styles.css'
+import VModal from '@febe95/vue-js-modal/dist/index.nocss.js'
+import '@febe95/vue-js-modal/dist/styles.css'
 ```
 
 ```js
-Vue.use(VModal)
+app.use(VModal)
 ```
 
 ## SSR
@@ -44,16 +40,14 @@ export default {
 
 ```js
 // plugins/vue-js-modal.js
-import Vue from 'vue'
-import VModal from 'vue-js-modal/dist/ssr.nocss'
+import { defineNuxtPlugin } from 'nuxt/app'
+import VModal from '../../../dist/ssr.nocss'
 
-import 'vue-js-modal/dist/styles.css'
+import '../../../dist/styles.css'
 
-Vue.use(VModal, { ... })
-
-export default function(_, inject) {
-  inject('modal', Vue.prototype.$modal)
-}
+export default defineNuxtPlugin((nuxtApp) => {
+  nuxtApp.vueApp.use(VModal)
+})
 ```
 
 ::: tip Extracted CSS

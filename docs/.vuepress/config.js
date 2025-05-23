@@ -1,16 +1,34 @@
-const sidebar = require('./sidebar')
+import webpackBundler from '@vuepress/bundler-webpack'
+import { defineUserConfig } from 'vuepress'
+import { defaultTheme } from '@vuepress/theme-default'
+import { searchPlugin } from '@vuepress/plugin-search'
+import sidebar from './sidebar'
 
-module.exports = {
-  base: '/vue-js-modal/',
-  title: 'Vue.js Modal',
+export default defineUserConfig({
+  bundler: webpackBundler(),
+  base: '/vue-js-modal/docs/',
+  title: 'Vue.js Modal (Vue 3)',
+  port: 8081,
   description: 'Simple, flexible, Vue.js modal plugin',
-  themeConfig: {
-    displayAllHeaders: false,
-
+  plugins: [searchPlugin()],
+  theme: defaultTheme({
     sidebar,
-    nav: [
-      { text: 'Github', link: 'https://github.com/euvl/vue-js-modal' },
-      { text: 'Examples', link: '/examples/' }
+    navbar: [
+      { text: 'Github', link: 'https://github.com/febe95/vue-js-modal' },
+      { text: 'Vue 2', link: 'https://euvl.github.io/vue-js-modal/' },
+      {
+        text: 'Examples',
+        children: [
+          {
+            text: 'Demo',
+            link: 'https://febe95.github.io/vue-js-modal/demo'
+          },
+          {
+            text: 'SSR (Nuxt)',
+            link: 'https://febe95.github.io/vue-js-modal/examples/nuxt/'
+          }
+        ]
+      }
     ]
-  }
-}
+  })
+})

@@ -7,11 +7,13 @@ If you want to have a Close (x) button in the top-right corner, you can use "top
 ```html{3-7}
 <template>
   <modal name="foo">
-    <div slot="top-right">
-      <button @click="$modal.hide('foo')">
-        ❌
-      </button>
-    </div>
+    <template #top-right>
+      <div>
+        <button @click="$modal.hide('foo')">
+          ❌
+        </button>
+      </div>
+    </template>
     Hello, ☀️!
   </modal>
 </template>

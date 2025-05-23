@@ -1,9 +1,15 @@
 const path = require('path')
+const TerserPlugin = require('terser-webpack-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
+const webpack = require('webpack')
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: './src/main.js',
+  performance: {
+    hints: false
+  },
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
@@ -39,16 +45,38 @@ module.exports = {
   },
   resolve: {
     alias: {
-      vue$: 'vue/dist/vue.esm.js',
+      vue$: path.resolve(__dirname, './node_modules/vue/dist/vue.esm-bundler.js'), // enable runtime compiler (components passed as template property)
       plugin: path.resolve(__dirname, '../dist/index.js')
     }
   },
-  devServer: {
-    historyApiFallback: true,
-    noInfo: true
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        extractComments: false,
+        parallel: true,
+        terserOptions: {
+          sourceMap: true
+        }
+      }),
+      new CssMinimizerPlugin()
+    ]
   },
-  devtool: '#eval-source-map',
-  plugins: [new VueLoaderPlugin()]
+  devServer: {
+    host: '::1',
+    historyApiFallback: true,
+    static: {
+      directory: path.join(__dirname, '/')
+    }
+  },
+  devtool: 'source-map',
+  plugins: [
+    new webpack.DefinePlugin({
+      __VUE_OPTIONS_API__: 'true',
+      __VUE_PROD_DEVTOOLS__: 'false',
+      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false'
+    }),
+    new VueLoaderPlugin()
+  ]
 }
 /*
 if (process.env.NODE_ENV === 'production') {

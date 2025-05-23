@@ -77,6 +77,7 @@ const TransitionState = {
 
 export default {
   name: 'VueJsModal',
+  emits: ['before-open', 'opened', 'before-close', 'closed', 'resize'],
   props: {
     name: {
       required: true,
@@ -88,9 +89,9 @@ export default {
     },
     resizeEdges: {
       default: () => ['r', 'br', 'b', 'bl', 'l', 'tl', 't', 'tr'],
-      validator: val =>
+      validator: (val) =>
         ['r', 'br', 'b', 'bl', 'l', 'tl', 't', 'tr'].filter(
-          value => val.indexOf(value) !== -1
+          (value) => val.indexOf(value) !== -1
         ).length === val.length,
       type: Array
     },
@@ -139,7 +140,8 @@ export default {
       default: () => []
     },
     styles: {
-      type: [String, Array, Object]
+      type: [String, Array, Object],
+      default: ''
     },
     minWidth: {
       type: Number,
@@ -250,7 +252,7 @@ export default {
     }
   },
   mounted() {
-    this.resizeObserver = new ResizeObserver(entries => {
+    this.resizeObserver = new ResizeObserver((entries) => {
       if (entries.length > 0) {
         const [entry] = entries
 
@@ -263,7 +265,7 @@ export default {
   /**
    * Removes global listeners
    */
-  beforeDestroy() {
+  beforeUnmount() {
     this.$modal.subscription.$off('toggle', this.onToggle)
 
     window.removeEventListener('resize', this.onWindowResize)
@@ -498,7 +500,6 @@ export default {
 
     beforeModalTransitionLeave() {
       this.modalTransitionState = TransitionState.Leaving
-      this.resizeObserver.unobserve(this.$refs.modal)
 
       if (this.$focusTrap.enabled()) {
         this.$focusTrap.disable()
@@ -589,13 +590,6 @@ export default {
      * This method shifts the modal in the x direction.
      */
     getResizedShiftLeft(event) {
-      const {
-        viewportHeight,
-        viewportWidth,
-        trueModalWidth,
-        trueModalHeight
-      } = this
-
       let result = this.shiftLeft
 
       switch (event.direction) {
@@ -623,13 +617,6 @@ export default {
      * This method shifts the modal in the y direction.
      */
     getResizedShiftTop(event) {
-      const {
-        viewportHeight,
-        viewportWidth,
-        trueModalWidth,
-        trueModalHeight
-      } = this
-
       let result = this.shiftTop
 
       switch (event.direction) {
@@ -720,6 +707,8 @@ export default {
         return
       }
 
+      this.resizeObserver.unobserve(this.$refs.modal)
+
       this.startTransitionLeave()
     },
 
@@ -767,7 +756,7 @@ export default {
         let initialShiftLeft = 0
         let initialShiftTop = 0
 
-        const handleDraggableMousedown = event => {
+        const handleDraggableMousedown = (event) => {
           let target = event.target
 
           if (isInput(target)) {
@@ -789,7 +778,7 @@ export default {
           initialShiftTop = this.shiftTop
         }
 
-        const handleDraggableMousemove = event => {
+        const handleDraggableMousemove = (event) => {
           let { clientX, clientY } = getTouchEvent(event)
 
           this.shiftLeft = initialShiftLeft + clientX - startX
@@ -798,7 +787,7 @@ export default {
           event.preventDefault()
         }
 
-        const handleDraggableMouseup = event => {
+        const handleDraggableMouseup = (event) => {
           this.ensureShiftInWindowBounds()
 
           document.removeEventListener('mousemove', handleDraggableMousemove)
@@ -901,7 +890,7 @@ export default {
   transition: all 50ms;
 }
 
-.vm-transition--overlay-enter,
+.vm-transition--overlay-enter-from,
 .vm-transition--overlay-leave-active {
   opacity: 0;
 }
@@ -911,7 +900,7 @@ export default {
   transition: all 400ms;
 }
 
-.vm-transition--modal-enter,
+.vm-transition--modal-enter-from,
 .vm-transition--modal-leave-active {
   opacity: 0;
   transform: translateY(-20px);
@@ -919,10 +908,10 @@ export default {
 
 .vm-transition--default-enter-active,
 .vm-transition--default-leave-active {
-  transition: all 2ms;
+  transition: all 200ms;
 }
 
-.vm-transition--default-enter,
+.vm-transition--default-enter-from,
 .vm-transition--default-leave-active {
   opacity: 0;
 }

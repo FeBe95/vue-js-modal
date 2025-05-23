@@ -1,34 +1,43 @@
 const path = require('path')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 
-module.exports = {
+/** @type {import('webpack').Configuration} */
+const webpackConfig = {
   mode: 'production',
+  target: 'web',
   entry: path.resolve(__dirname, '../src/index.js'),
   devtool: 'source-map',
+  experiments: {
+    outputModule: false
+  },
   output: {
-    library: 'vue-js-modal',
-    libraryTarget: 'umd',
+    library: {
+      name: 'vue-js-modal',
+      type: 'umd'
+    },
+    filename: 'dummy.js', // will be overwritten by the other webpack config implementations
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/dist/'
+  },
+  externals: {
+    vue: 'vue'
   },
   resolve: {
     extensions: ['.ts', '.js']
   },
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
+      new TerserPlugin({
+        extractComments: false,
         parallel: true,
-        sourceMap: true
-        // compress: {
-        //   pure_funcs: ['console.log']
-        // }
+        terserOptions: {
+          module: false,
+          sourceMap: true
+        }
       }),
-      new OptimizeCSSAssetsPlugin({
-        canPrint: true
-      })
+      new CssMinimizerPlugin()
     ]
   },
   module: {
@@ -58,3 +67,5 @@ module.exports = {
   },
   plugins: [new VueLoaderPlugin()]
 }
+
+module.exports = webpackConfig

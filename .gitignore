@@ -4,5 +4,6 @@
 *.map
 node_modules/
 npm-debug.log
-demo/dist/*
 docs/.vuepress/dist
+docs/.vuepress/.cache
+docs/.vuepress/.temp

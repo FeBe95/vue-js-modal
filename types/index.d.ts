@@ -1,4 +1,4 @@
-import Vue, { PluginObject, ComponentOptions, AsyncComponent } from 'vue'
+import { ObjectPlugin, Component, AsyncComponentLoader } from 'vue'
 
 export declare interface VueJSModalOptions {
   componentName?: string
@@ -7,14 +7,13 @@ export declare interface VueJSModalOptions {
   dynamicDefaults?: object
 }
 
-declare const VueJSModal: PluginObject<VueJSModalOptions>
+declare const VueJSModal: ObjectPlugin<VueJSModalOptions | []>
 
 declare interface VModal {
   show(name: string, params?: object): void
   show(
-    component: typeof Vue | ComponentOptions<Vue> | AsyncComponent,
+    component: Component | AsyncComponentLoader,
     componentProps?: object,
-    componentSlots?: object,
     modalProps?: object,
     modalEvents?: object
   ): void
@@ -23,8 +22,8 @@ declare interface VModal {
   toggle(name: string, params?: object): void
 }
 
-declare module 'vue/types/vue' {
-  interface Vue {
+declare module 'vue' {
+  interface ComponentCustomProperties {
     $modal: VModal
   }
 }

@@ -1,7 +1,7 @@
 export const DYNAMIC_MODAL_DISABLED_ERROR =
   '[vue-js-modal] ' +
   '$modal() received object as a first argument, but dynamic modals are ' +
-  'switched off. https://github.com/euvl/vue-js-modal/#dynamic-modals'
+  'switched off. https://github.com/febe95/vue-js-modal/#dynamic-modals'
 
 export const UNSUPPORTED_ARGUMENT_ERROR =
   '[vue-js-modal] ' +

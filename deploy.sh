@@ -13,6 +13,6 @@ git init
 git add -A
 git commit -m 'Deplying docs'
 
-git push -f git@github.com:euvl/vue-js-modal.git master:gh-pages
+git push -f git@github.com:febe95/vue-js-modal.git master:gh-pages
 
 cd -

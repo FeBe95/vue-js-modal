@@ -6,12 +6,12 @@ sidebarDepth: 2
 
 ## Configuration
 
-Configuration options can be passed as a second argument to `Vue.use`. 
+Configuration options can be passed as a second argument to `app.use`. 
 
 ```js
 import VModal from 'vue-js-modal'
 
-Vue.use(VModal, { ... })
+app.use(VModal, { ... })
 ```
 
 ####  `dialog: Boolean` 
@@ -27,7 +27,7 @@ Enables [dialogs](Intro#dialogs).
 Changes component name from "Modal" to any other string value. It is useful when there is already a global "modal" component.
 
 ```js
-Vue.use(VModal, { componentName: 'Foo' })
+app.use(VModal, { componentName: 'Foo' })
 ```
 ```html
 <foo name="example">This is a modal</foo>
@@ -42,7 +42,7 @@ Vue.use(VModal, { componentName: 'Foo' })
 Default properties that are injected into dynamic modals. 
 
 ```js
-Vue.use(VModal, { dynamicDefaults: { draggable: true, resizable: true } })
+app.use(VModal, { dynamicDefaults: { draggable: true, resizable: true } })
 ```
 
 ## API

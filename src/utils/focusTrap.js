@@ -12,7 +12,7 @@ const FOCUSABLE_ELEMENTS_QUERY =
   'summary:not([disabled]), ' +
   '[tabindex]:not([tabindex="-1"])'
 
-const isTabPressed = event => {
+const isTabPressed = (event) => {
   return event.key === 'Tab' || event.keyCode === 9
 }
 
@@ -20,11 +20,11 @@ const querySelectorAll = (element, selector) => {
   return [...(element.querySelectorAll(selector) || [])]
 }
 
-const queryFocusableElements = element => {
+const queryFocusableElements = (element) => {
   return querySelectorAll(element, FOCUSABLE_ELEMENTS_QUERY)
 }
 
-const isFocused = element => {
+const isFocused = (element) => {
   return element == document.activeElement
 }
 
@@ -65,7 +65,10 @@ class FocusTrap {
     }
 
     // TAB
-    if (isNothingFocused() || (!event.shiftKey && isFocused(this.lastElement()))) {
+    if (
+      isNothingFocused() ||
+      (!event.shiftKey && isFocused(this.lastElement()))
+    ) {
       this.firstElement().focus()
       event.preventDefault()
       return

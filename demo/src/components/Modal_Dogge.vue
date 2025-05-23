@@ -6,13 +6,14 @@
     :height="260"
     :width="260"
   >
-    <div 
-      slot="top-right"
-      class="ct-top-right"
-      @click="$modal.hide('dog-profile')"
-    >
-      Slot for close button
-    </div>
+    <template #top-right>
+      <div
+        class="ct-top-right"
+        @click="$modal.hide('dog-profile')"
+      >
+        Slot for close button
+      </div>
+    </template>
     <img src="/static/cute_dog.gif" />
   </modal>
 </template>
@@ -50,7 +51,7 @@ export default {
   transition: all 0.5s;
 }
 
-.scale-enter,
+.scale-enter-from,
 .scale-leave-active {
   opacity: 0;
   transform: scale(0.3) translateY(24px);

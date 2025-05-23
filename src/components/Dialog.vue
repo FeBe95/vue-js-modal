@@ -8,7 +8,7 @@
     :shift-y="0.3"
     :adaptive="true"
     :focus-trap="true"
-    :clickToClose="clickToClose"
+    :click-to-close="clickToClose"
     :transition="transition"
     @before-open="beforeOpened"
     @before-close="beforeClosed"
@@ -16,22 +16,30 @@
     @closed="$emit('closed', $event)"
   >
     <div class="vue-dialog-content">
-      <div class="vue-dialog-content-title" v-if="params.title" v-html="params.title || ''" />
+      <div
+        v-if="params.title"
+        class="vue-dialog-content-title"
+        v-html="params.title || ''"
+      />
 
-      <component v-if="params.component" v-bind="params.props" :is="params.component" />
+      <component
+        v-bind="params.props"
+        :is="params.component"
+        v-if="params.component"
+      />
       <div v-else v-html="params.text || ''" />
     </div>
-    <div class="vue-dialog-buttons" v-if="buttons">
+    <div v-if="buttons" class="vue-dialog-buttons">
       <button
         v-for="(button, index) in buttons"
+        :key="index"
         :class="button.class || 'vue-dialog-button'"
         type="button"
         tabindex="0"
         :style="buttonStyle"
-        :key="index"
-        v-html="button.title"
         @click.stop="click(index, $event)"
-      >{{ button.title }}</button>
+        v-html="button.title"
+      />
     </div>
     <div v-else class="vue-dialog-buttons-none" />
   </component>
@@ -39,6 +47,7 @@
 <script>
 export default {
   name: 'VueJsDialog',
+  emits: ['before-opened', 'opened', 'before-closed', 'closed'],
   props: {
     width: {
       type: [Number, String],
@@ -49,7 +58,8 @@ export default {
       default: true
     },
     transition: {
-      type: String
+      type: String,
+      default: ''
     }
   },
   data() {
