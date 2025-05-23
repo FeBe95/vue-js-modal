@@ -908,7 +908,7 @@ export default {
 
 .vm-transition--default-enter-active,
 .vm-transition--default-leave-active {
-  transition: all 2ms;
+  transition: all 200ms;
 }
 
 .vm-transition--default-enter-from,
