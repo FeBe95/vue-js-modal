@@ -1,6 +1,6 @@
 const path = require('path')
 const TerserPlugin = require('terser-webpack-plugin')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 
 module.exports = {
@@ -22,17 +22,13 @@ module.exports = {
   optimization: {
     minimizer: [
       new TerserPlugin({
-        cache: true,
         extractComments: false,
         parallel: true,
-        sourceMap: true
-        // compress: {
-        //   pure_funcs: ['console.log']
-        // }
+        terserOptions: {
+          sourceMap: true
+        }
       }),
-      new OptimizeCSSAssetsPlugin({
-        canPrint: true
-      })
+      new CssMinimizerPlugin()
     ]
   },
   module: {
