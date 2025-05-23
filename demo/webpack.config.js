@@ -5,8 +5,11 @@ const { VueLoaderPlugin } = require('vue-loader')
 const webpack = require('webpack')
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: './src/main.js',
+  performance: {
+    hints: false
+  },
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
@@ -42,7 +45,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      vue$: path.resolve(__dirname, './node_modules/vue/dist/vue.esm-bundler.js'),
+      vue$: path.resolve(__dirname, './node_modules/vue/dist/vue.esm-bundler.js'), // enable runtime compiler (components passed as template property)
       plugin: path.resolve(__dirname, '../dist/index.js')
     }
   },
@@ -59,19 +62,20 @@ module.exports = {
     ]
   },
   devServer: {
+    host: '::1',
     historyApiFallback: true,
     static: {
       directory: path.join(__dirname, '/')
     }
   },
-  devtool: 'eval-source-map',
+  devtool: 'source-map',
   plugins: [
     new webpack.DefinePlugin({
       __VUE_OPTIONS_API__: 'true',
       __VUE_PROD_DEVTOOLS__: 'false',
-      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false',
+      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false'
     }),
-    new VueLoaderPlugin(),
+    new VueLoaderPlugin()
   ]
 }
 /*
