@@ -31,15 +31,15 @@
     "url": "https://github.com/febe95/vue-js-modal/issues"
   },
   "scripts": {
-    "build:client": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --config ./build/webpack.client.config.js --progress",
-    "build:client-no-css": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --config ./build/webpack.client-no-css.config.js --progress",
-    "build:ssr": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --config ./build/webpack.ssr.config.js --progress",
-    "build:ssr-no-css": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --config ./build/webpack.ssr-no-css.config.js --progress",
+    "build:client": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --config ./config/webpack.client.config.js --progress",
+    "build:client-no-css": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --config ./config/webpack.client-no-css.config.js --progress",
+    "build:ssr": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --config ./config/webpack.ssr.config.js --progress",
+    "build:ssr-no-css": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --config ./config/webpack.ssr-no-css.config.js --progress",
     "lint:js": "eslint --ext js --ext jsx --ext vue src",
     "lint:js:fix": "npm run lint:js -- --fix",
     "test": "jest",
     "build": "npm run build:client && npm run build:client-no-css && npm run build:ssr && npm run build:ssr-no-css",
-    "watch": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --config ./build/webpack.client.config.js --progress --watch",
+    "watch": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --config ./config/webpack.client.config.js --progress --watch",
     "test:types": "tsc -p types/test",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
