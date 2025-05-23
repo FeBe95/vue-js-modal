@@ -2,8 +2,8 @@
   "name": "demo",
   "version": "1.0.0",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development NODE_OPTIONS=--openssl-legacy-provider webpack-dev-server --open --hot",
-    "build": "cross-env NODE_ENV=production NODE_OPTIONS=--openssl-legacy-provider webpack --progress"
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
+    "build": "cross-env NODE_ENV=production webpack --progress"
   },
   "dependencies": {
     "vue": "^3.5.13"
