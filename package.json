@@ -45,7 +45,10 @@
     "docs:build": "vuepress build docs"
   },
   "license": "MIT",
-  "browserslist": "> 0.25%, not dead",
+  "browserslist": [
+    "> 0.25%",
+    "not dead"
+  ],
   "overrides": {
     "@vuepress/theme-default": {
       "sass-loader": "^8.0.0",
