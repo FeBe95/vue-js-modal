@@ -6,6 +6,7 @@
     <demo-conditional-modal />
     <demo-size-modal />
     <demo-adaptive-modal />
+    <demo-adaptive-and-auto-height-modal />
     <demo-resizable-modal />
     <demo-draggable-modal />
 
@@ -30,6 +31,7 @@
     <div style="margin-top: 20px; margin-bottom: 15px;">
       <button class="btn" @click="$modal.show('example-resizable')">Resizable</button>
       <button class="btn" @click="$modal.show('example-adaptive')">Adaptive</button>
+      <button class="btn" @click="$modal.show('example-adaptive-and-auto-height')">Adaptive, Height: auto</button>
       <button class="btn" @click="$modal.show('example-draggable')">Draggable</button>
       <br />
       <button class="btn green" @click="$modal.show('dog-profile')">Demo: Dog Profile photo</button>
@@ -60,6 +62,7 @@
 
 <script>
 import DemoAdaptiveModal from './components/Modal_Adaptive.vue'
+import DemoAdaptiveAndAutoHeightModal from './components/Modal_AdaptiveAndAutoHeight.vue'
 import DemoDraggableModal from './components/Modal_Draggable.vue'
 import DemoResizableModal from './components/Modal_Resizable.vue'
 import DemoConditionalModal from './components/Modal_Conditional.vue'
@@ -73,6 +76,7 @@ export default {
   name: 'app',
   components: {
     DemoAdaptiveModal,
+    DemoAdaptiveAndAutoHeightModal,
     DemoDraggableModal,
     DemoResizableModal,
     DemoErrorModal,
