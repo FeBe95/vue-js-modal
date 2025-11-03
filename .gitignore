@@ -7,3 +7,4 @@ npm-debug.log
 docs/.vuepress/dist
 docs/.vuepress/.cache
 docs/.vuepress/.temp
+docs/.vuepress/public/demo

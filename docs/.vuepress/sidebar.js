@@ -10,5 +10,14 @@ export default [
       '/Slots',
       '/Other'
     ]
+  },
+  {
+    text: 'Examples',
+    children: [
+      {
+        text: 'Demo',
+        link: 'https://febe95.github.io/vue-js-modal/demo/'
+      }
+    ]
   }
 ]
