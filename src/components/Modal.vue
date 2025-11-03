@@ -256,7 +256,9 @@ export default {
       if (entries.length > 0) {
         const [entry] = entries
 
-        this.modal.renderedHeight = entry.contentRect.height
+        requestAnimationFrame(() => {
+          this.modal.renderedHeight = entry.contentRect.height
+        })
       }
     })
 
