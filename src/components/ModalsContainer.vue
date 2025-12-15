@@ -9,6 +9,7 @@
     <component
       :is="modal.component"
       v-bind="modal.componentAttrs"
+      v-on="modal.componentListeners"
       @close="$modal.hide(modal.modalAttrs.name, $event)"
     />
   </modal>
@@ -37,14 +38,33 @@ export default {
     })
   },
   methods: {
-    add(component, componentAttrs = {}, modalAttrs = {}, modalListeners = {}) {
+    add(component, componentAttrs = {}, modalAttrs = {}, componentListeners = {}) {
       const id = generateId()
       const name = modalAttrs.name || PREFIX + id
+
+      // deprecate modal listeners
+      const modalListeners = Object.fromEntries(
+        Object.entries(componentListeners).map(([eventName, eventListener]) => [
+          eventName,
+          function (...args) {
+            console.warn(
+              '[vue-js-modal] Emitting "' +
+                eventName +
+                '" via `this.$parent.$emit(...)` is deprecated. ' +
+                'Use `this.$emit(...)` directly instead.'
+            )
+            return typeof eventListener === 'function'
+              ? eventListener.apply(this, args)
+              : eventListener
+          }
+        ])
+      )
 
       this.modals.push({
         id,
         modalAttrs: { ...modalAttrs, name },
         modalListeners,
+        componentListeners,
         component: markRaw(component),
         componentAttrs
       })
