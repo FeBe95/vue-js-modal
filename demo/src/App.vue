@@ -57,6 +57,9 @@
         class="btn"
         @click="showDynamicComponentModalWithModalParams"
       >Dynamic: Component Modal with modal params</button>
+      <br>
+      <button class="btn" @click="showDynamicRuntimeModalWithEvents">Dynamic: Runtime Modal with events</button>
+      <button class="btn" @click="showDynamicComponentModalWithEvents">Dynamic: Component Modal with events</button>
     </div>
 </template>
 
@@ -71,6 +74,7 @@ import DemoLoginModal from './components/Modal_Login.vue'
 import DemoDogProfileModal from './components/Modal_Dogge.vue'
 import DemoSizeModal from './components/Modal_Autosize.vue'
 import DemoCustomComponent from './components/Modal_CustomComponent.vue'
+import ModalCustomComponentWithEvents from './components/Modal_CustomComponentWithEvents.vue'
 
 export default {
   name: 'app',
@@ -151,7 +155,7 @@ export default {
               <div class="example-modal-content">
                 <p>Component has been created inline.</p>
                 <p>{{ text }}</p>
-                <p>This component is draggable because of the "dynamicDefault" property.</p>
+                <p>This component is draggable because of the "dynamicDefaults" property.</p>
               </div>
             `,
           props: ['text']
@@ -207,6 +211,48 @@ export default {
           { name, height: 'auto' }
         )
       }, 300)
+    },
+
+    showDynamicRuntimeModalWithEvents() {
+      this.$modal.show(
+        {
+          template: `
+              <div class="example-modal-content">
+                <p>Click the button to send data back to the app</p>
+                <button class="btn" @click="sendData">Emit data to parent</button>
+              </div>
+            `,
+          emits: ['my-event'],
+          methods: {
+            sendData() {
+              this.$emit('my-event', 'This message was sent via `this.$emit()`')
+              this.$parent.$emit('my-event', 'This message was sent via `this.$parent.$emit()`')
+              this.$parent.$parent.$emit('my-event', 'This message was sent via `this.$parent.$parent.$emit()`')
+              this.$parent.$parent.$parent.$emit('my-event', 'This message was sent via `this.$parent.$parent.$parent.$emit()`')
+            }
+          }
+        },
+        {},
+        {
+          height: 'auto'
+        },
+        {
+          'my-event': (data) => alert(JSON.stringify(data))
+        }
+      )
+    },
+
+    showDynamicComponentModalWithEvents() {
+      this.$modal.show(
+        ModalCustomComponentWithEvents,
+        {},
+        {
+          height: 'auto'
+        },
+        {
+          'my-event': (data) => alert(data)
+        }
+      )
     },
 
     dialogEvent(eventName) {
