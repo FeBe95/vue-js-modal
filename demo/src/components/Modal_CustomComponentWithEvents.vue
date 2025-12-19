@@ -11,9 +11,9 @@ export default {
   methods: {
     sendData() {
       this.$emit('my-event', 'This message was sent via `this.$emit()`')
-      this.$parent.$emit('my-event', 'This message was sent via `this.$parent.$emit()`')
-      this.$parent.$parent.$emit('my-event', 'This message was sent via `this.$parent.$parent.$emit()`')
-      this.$parent.$parent.$parent.$emit('my-event', 'This message was sent via `this.$parent.$parent.$parent.$emit()`')
+      this.$parent.$emit('my-event', 'This message was sent via `this.$parent.$emit()`.\n\n⚠️ This is DEPRECATED ⚠️')
+      this.$parent.$parent.$emit('my-event', 'This message was sent via `this.$parent.$parent.$emit()`.\n\n⚠️ This is DEPRECATED ⚠️')
+      this.$parent.$parent.$parent.$emit('my-event', 'This message was sent via `this.$parent.$parent.$parent.$emit()`.\n\n⚠️ This is DEPRECATED ⚠️')
     }
   }
 }

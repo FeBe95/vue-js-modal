@@ -1,4 +1,5 @@
 <template>
+  <div class="card">
     <!-- Modals -->
     <demo-error-modal />
     <demo-login-modal />
@@ -19,16 +20,20 @@
 
     <!-- Other -->
 
-    <pre style="line-height: 1.5;">
-    
-    npm install --save vue-js-modal
+    <h2>Quick Start</h2>
+    <pre>
+      npm install --save vue-js-modal
+    </pre>
 
-    ...
-    import VModal from 'vue-js-modal'
-    Vue.use(VModal)
-  </pre>
+    <pre>
+      import VModal from 'vue-js-modal'
+      app.use(VModal, { ... })
+    </pre>
+  </div>
 
-    <div style="margin-top: 20px; margin-bottom: 15px;">
+  <div class="card">
+    <h2>Examples</h2>
+    <div>
       <button class="btn" @click="$modal.show('example-resizable')">Resizable</button>
       <button class="btn" @click="$modal.show('example-adaptive')">Adaptive</button>
       <button class="btn" @click="$modal.show('example-adaptive-and-auto-height')">Adaptive, Height: auto</button>
@@ -58,12 +63,55 @@
         @click="showDynamicComponentModalWithModalParams"
       >Dynamic: Component Modal with modal params</button>
       <br>
-      <button class="btn" @click="showDynamicRuntimeModalWithEvents">Dynamic: Runtime Modal with events</button>
-      <button class="btn" @click="showDynamicComponentModalWithEvents">Dynamic: Component Modal with events</button>
+      <button class="btn" @click="showDynamicRuntimeModalWithEvents">Custom Events: Runtime Modal</button>
+      <button class="btn" @click="showDynamicComponentModalWithEvents">Custom Events: Component Modal</button>
+      <br>
+      <button
+        class="btn"
+        style="min-width: 206px; white-space: nowrap;"
+        :disabled="asyncComponentBasicLoading ? 'disabled' : null"
+        @click="showDynamicAsyncComponentModal"
+      >
+        {{ asyncComponentBasicButtonLabel }}
+      </button>
+      <button class="btn" @click="showDynamicAsyncComponentModalWithDefaultLoadingBars">Async Component: default loading bars</button>
+      <button class="btn" @click="showDynamicAsyncComponentModalWithCustomLoadingText">Async Component: custom text</button>
+      <button class="btn" @click="showDynamicAsyncComponentModalWithCustomLoadingHtml">Async Component: custom html</button>
     </div>
+  </div>
+
+  <div class="card">
+    <h2>Event Log</h2>
+
+    <pre
+      ref="event-log"
+      style="
+        white-space-collapse: collapse;
+        max-height: 200px;
+        overflow: scroll;
+      "
+    >
+      <template v-for="{ timestamp, data } of receivedEvents" :key="timestamp">
+        {{
+          timestamp.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric', second: 'numeric', fractionalSecondDigits: 3 })
+        }}
+        <template v-if="data?.name && data?.state">
+          [native event data]: {{ data.name }} → "{{ data.state }}"
+        </template>
+        <template v-else>
+          [custom event data]: {{ JSON.stringify(data.replace(/\n+/, ' ')) }}
+        </template>
+        <br>
+        <template v-if="data?.state === 'closed'">
+          <br>
+        </template>
+      </template>
+    </pre>
+  </div>
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue'
 import DemoAdaptiveModal from './components/Modal_Adaptive.vue'
 import DemoAdaptiveAndAutoHeightModal from './components/Modal_AdaptiveAndAutoHeight.vue'
 import DemoDraggableModal from './components/Modal_Draggable.vue'
@@ -75,6 +123,28 @@ import DemoDogProfileModal from './components/Modal_Dogge.vue'
 import DemoSizeModal from './components/Modal_Autosize.vue'
 import DemoCustomComponent from './components/Modal_CustomComponent.vue'
 import ModalCustomComponentWithEvents from './components/Modal_CustomComponentWithEvents.vue'
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+
+const DemoCustomComponentAsync = defineAsyncComponent(async () => {
+  await sleep(2000) // artificial delay: 1 seconds
+  return import('./components/Modal_CustomComponent.vue')
+})
+
+const DemoCustomComponentAsyncWithDefaultLoadingBars = defineAsyncComponent(async () => {
+  await sleep(2000) // artificial delay: 2 seconds
+  return import('./components/Modal_CustomComponent.vue')
+})
+
+const DemoCustomComponentAsyncWithCustomHtml = defineAsyncComponent(async () => {
+  await sleep(2000) // artificial delay: 2 seconds
+  return import('./components/Modal_CustomComponent.vue')
+})
+
+const DemoCustomComponentAsyncWithCustomText = defineAsyncComponent(async () => {
+  await sleep(2000) // artificial delay: 2 seconds
+  return import('./components/Modal_CustomComponent.vue')
+})
 
 export default {
   name: 'app',
@@ -91,6 +161,8 @@ export default {
   },
   data() {
     return {
+      receivedEvents: [],
+      asyncComponentBasicLoading: false,
       canBeShown: false
     }
   },
@@ -99,7 +171,33 @@ export default {
       this.canBeShown = !this.canBeShown
     }, 5000)
   },
+  computed: {
+    asyncComponentBasicButtonLabel() {
+      return this.asyncComponentBasicLoading
+        ? 'Loading...'
+        : 'Async Component: basic'
+    }
+  },
+  watch: {
+    receivedEvents: {
+      handler() {
+        this.$nextTick(() => {
+          this.$refs['event-log'].scrollTo({
+            top: this.$refs['event-log'].scrollHeight,
+            behavior: 'smooth'
+          })
+        })
+      },
+      deep: true
+    }
+  },
   methods: {
+    logReceivedEvent(event) {
+      this.receivedEvents.push({
+        timestamp: new Date(),
+        data: event
+      })
+    },
     conditionalShow() {
       this.$modal.show('conditional-modal', {
         show: this.canBeShown
@@ -226,9 +324,9 @@ export default {
           methods: {
             sendData() {
               this.$emit('my-event', 'This message was sent via `this.$emit()`')
-              this.$parent.$emit('my-event', 'This message was sent via `this.$parent.$emit()`')
-              this.$parent.$parent.$emit('my-event', 'This message was sent via `this.$parent.$parent.$emit()`')
-              this.$parent.$parent.$parent.$emit('my-event', 'This message was sent via `this.$parent.$parent.$parent.$emit()`')
+              this.$parent.$emit('my-event', 'This message was sent via `this.$parent.$emit()`.\n\n⚠️ This is DEPRECATED ⚠️')
+              this.$parent.$parent.$emit('my-event', 'This message was sent via `this.$parent.$parent.$emit()`.\n\n⚠️ This is DEPRECATED ⚠️')
+              this.$parent.$parent.$parent.$emit('my-event', 'This message was sent via `this.$parent.$parent.$parent.$emit()`.\n\n⚠️ This is DEPRECATED ⚠️')
             }
           }
         },
@@ -237,7 +335,10 @@ export default {
           height: 'auto'
         },
         {
-          'my-event': (data) => alert(JSON.stringify(data))
+          'my-event': (event) => {
+            this.logReceivedEvent(event)
+            setTimeout(() => alert(event), 100)
+          }
         }
       )
     },
@@ -250,7 +351,120 @@ export default {
           height: 'auto'
         },
         {
-          'my-event': (data) => alert(data)
+          'my-event': (event) => {
+            this.logReceivedEvent(event)
+            setTimeout(() => alert(event), 100)
+          }
+        }
+      )
+    },
+
+    showDynamicAsyncComponentModal() {
+      this.asyncComponentBasicLoading = true
+
+      this.$modal.show(
+        DemoCustomComponentAsync,
+        {
+          text: 'I was loaded asynchronously. Loading took ~2 seconds (the first time only).'
+        },
+        {
+          height: 'auto'
+        },
+        {
+          loadstart: this.logReceivedEvent,
+          loaded: this.logReceivedEvent,
+          'before-open': (event) => {
+            this.asyncComponentBasicLoading = false
+            this.logReceivedEvent(event)
+          },
+          opened: this.logReceivedEvent,
+          'before-close': this.logReceivedEvent,
+          closed: this.logReceivedEvent
+        }
+      )
+    },
+
+    showDynamicAsyncComponentModalWithDefaultLoadingBars() {
+      this.$modal.show(
+        DemoCustomComponentAsyncWithDefaultLoadingBars,
+        {
+          text: 'I was loaded asynchronously using <Suspense>!'
+        },
+        {
+          height: 'auto',
+          loader: true
+        },
+        {
+          'before-open': this.logReceivedEvent,
+          loadstart: this.logReceivedEvent,
+          opened: this.logReceivedEvent,
+          loaded: this.logReceivedEvent,
+          'before-close': this.logReceivedEvent,
+          closed: this.logReceivedEvent
+        }
+      )
+    },
+
+    showDynamicAsyncComponentModalWithCustomLoadingText() {
+      this.$modal.show(
+        DemoCustomComponentAsyncWithCustomText,
+        {
+          text: 'I was loaded asynchronously with a custom loading text!'
+        },
+        {
+          loader: 'Loading...'
+        },
+        {
+          'before-open': this.logReceivedEvent,
+          loadstart: this.logReceivedEvent,
+          opened: this.logReceivedEvent,
+          loaded: this.logReceivedEvent,
+          'before-close': this.logReceivedEvent,
+          closed: this.logReceivedEvent
+        }
+      )
+    },
+
+    showDynamicAsyncComponentModalWithCustomLoadingHtml() {
+      this.$modal.show(
+        DemoCustomComponentAsyncWithCustomHtml,
+        {
+          text: 'I was loaded asynchronously with a custom loading html!'
+        },
+        {
+          loader: {
+            html: `
+              <div style="text-align: center">
+                <h3>Loading</h3>
+                <p>
+                  <span>Please wait...</span>
+                </p>
+                <p>
+                  <img width="128" src="/static/cute_dog.gif" />
+                </p>
+              </div>
+            `,
+            style: {
+              color: 'red',
+
+              // Center text horizontally and vertically
+              position: 'relative',
+              width: '100%',
+              height: '100%',
+              padding: '2rem',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }
+          }
+        },
+        {
+          'before-open': this.logReceivedEvent,
+          loadstart: this.logReceivedEvent,
+          opened: this.logReceivedEvent,
+          loaded: this.logReceivedEvent,
+          'before-close': this.logReceivedEvent,
+          closed: this.logReceivedEvent
         }
       )
     },
@@ -288,11 +502,21 @@ pre {
   color: #595959;
   background-color: #f3f3f3;
   border: 1px solid #eee;
+  line-height: 1.5;
+  white-space: pre-line;
+  padding: 1rem;
 }
 
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+}
+
+.card {
   color: #6b7c93;
 
   background: #f6f9fc;
@@ -305,6 +529,7 @@ pre {
 h1,
 h2 {
   font-weight: normal;
+  margin-top: 0;
 
   a {
     font-size: 12px;
@@ -359,6 +584,11 @@ button.btn {
       background: mix(#f21368, black, 95%);
     }
   }
+}
+
+button:disabled {
+  opacity: 0.75;
+  pointer-events: none;
 }
 
 .example-modal-content {
