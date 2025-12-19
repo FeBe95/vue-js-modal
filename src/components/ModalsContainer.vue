@@ -15,6 +15,8 @@
     />
     <Suspense
       v-else
+      @pending="sendNativeEvent(modal, 'loadstart')"
+      @resolve="sendNativeEvent(modal, 'loaded')"
     >
       <template #default>
         <component
@@ -77,6 +79,14 @@ export default {
   data() {
     return {
       isLoadingAsyncComponent: false,
+      nativeEvents: [
+        'loadstart',
+        'loaded',
+        'before-open',
+        'opened',
+        'before-close',
+        'closed'
+      ],
       modals: []
     }
   },
@@ -92,6 +102,16 @@ export default {
     })
   },
   methods: {
+    sendNativeEvent(modal, eventName) {
+      if (!Object.hasOwn(modal.componentListeners, eventName)) {
+        return
+      }
+
+      modal.componentListeners[eventName]({
+        name: modal.modalAttrs.name,
+        state: eventName
+      })
+    },
     add(component, componentAttrs = {}, modalAttrs = {}, componentListeners = {}) {
       if (this.isLoadingAsyncComponent) {
         console.warn('[vue-js-modal] Prevented modal from being opened, because another modal is currently loading.')
@@ -111,12 +131,15 @@ export default {
         Object.entries(componentListeners).map(([eventName, eventListener]) => [
           eventName,
           function (...args) {
-            console.warn(
-              '[vue-js-modal] Emitting "' +
-                eventName +
-                '" via `this.$parent.$emit(...)` is deprecated. ' +
-                'Use `this.$emit(...)` directly instead.'
-            )
+            if (!that.nativeEvents.includes(eventName)) {
+              console.warn(
+                '[vue-js-modal] Emitting "' +
+                  eventName +
+                  '" via `this.$parent.$emit(...)` is deprecated. ' +
+                  'Use `this.$emit(...)` directly instead.'
+              )
+            }
+
             return typeof eventListener === 'function'
               ? eventListener.apply(this, args)
               : eventListener
@@ -147,7 +170,10 @@ export default {
               modalAttrs: { name }
             }
 
+            this.sendNativeEvent(modalEventData, 'loadstart')
+
             component.__asyncLoader().then(() => {
+              this.sendNativeEvent(modalEventData, 'loaded')
               this.$modal.show(name)
               this.isLoadingAsyncComponent = false
             })
