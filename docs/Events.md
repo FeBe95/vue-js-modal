@@ -14,24 +14,6 @@ Emits after modal became visible or started transition.
 
 ---
 
-#### `@loadstart`
-
-> [!NOTE]
-> For async components only.
-
-Emits as soon as the component has started loading and the loader is shown.
-
----
-
-#### `@loaded`
-
-> [!NOTE]
-> For async components only.
-
-Emits after the component has finished loading, and the DOM is showing the modal content instead of the loader.
-
----
-
 #### `@before-close`
 
 Emits before modal is going to be closed. Further closing of the modal can be blocked from this event listener by calling `event.cancel()` .
@@ -44,6 +26,26 @@ Emits right before modal is destroyed.
 
 ---
 
+#### `@loadstart`
+
+::: info
+For async components only.
+:::
+
+Emits as soon as the component has started loading and the loader is shown.
+
+---
+
+#### `@loaded`
+
+::: info
+For async components only.
+:::
+
+Emits after the component has finished loading, and the DOM is showing the modal content instead of the loader.
+
+---
+
 ## Event cancellation
 
 Opening and closing can be canceled by calling `event.cancel()` function in either `before-open` or `before-close` event handlers.
@@ -53,7 +55,7 @@ Opening and closing can be canceled by calling `event.cancel()` function in eith
 
 Static modal:
 
-```html{24}
+```vue
 <template>
   <modal name="example"
          @before-open="beforeOpen"
@@ -88,7 +90,7 @@ export default {
 Dynamic modal:
 
 
-```html
+```vue
 <script>
 export default {
   name: 'Example',
@@ -126,4 +128,40 @@ export default {
 }
 </script>
 
+```
+
+Async modal:
+
+```vue
+<script>
+import { defineAsyncComponent } from 'vue'
+
+const MyAsyncComponent = defineAsyncComponent(async () => import('./components/MyComponent.vue'))
+
+export default {
+name: 'Example',
+  methods: {
+    openModal () {
+      this.$modal.show(
+        MyAsyncComponent,
+        {},
+        {
+          height: 'auto',
+          loader: true
+        },
+        {
+          loadstart: this.loadStartEvent,
+          loaded: this.loadedEvent,
+        }
+      )
+    },
+    loadStartEvent (event) {
+      console.log('Loading...')
+    },
+    loadedEvent (event) {
+      console.log('Loading completed.')
+    }
+  }
+}
+</script>
 ```

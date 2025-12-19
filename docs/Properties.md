@@ -8,51 +8,62 @@ sidebarDepth: 2
 
 #### `name: String` **required**
 
+::: info
+**Required** for static modals, **optional** for dynamic modals.
+:::
+
 Name of the modal, it is required property.
 
 ---
 
 #### `resizable: Boolean`
+> Default: `false`
 
 Enables resizing of the modal.
 
 ---
 
-#### `resizeEdges: Array<String>` `default: ['r', 'br', 'b', 'bl', 'l', 'tl', 't', 'tr']`
+#### `resizeEdges: Array<String>`
+> Default: `['r', 'br', 'b', 'bl', 'l', 'tl', 't', 'tr']`
 
 Can contain an array with the edges on which you want the modal to be able to resize on.
-| string | corner |
-| ------- | ------------- |
-| r | right |
-| br | bottom right |
-| b | bottom |
-| bl | bottom left |
-| l | left |
-| t | top left |
-| t | top |
-| tr | top right |
+
+| string | direction | corner       |
+|:------:|:---------:|--------------|
+|   `'r'`    | →         | right        |
+|   `'br'`   | ↘         | bottom right |
+|   `'b'`    | ↓         | bottom       |
+|   `'bl'`   | ↙         | bottom left  |
+|   `'l'`    | ←         | left         |
+|   `'t'`    | ↖         | top left     |
+|   `'t'`    | ↑         | top          |
+|   `'tr'`   | ↗         | top right    |
 
 ---
 
-#### `resizeIndicator: Boolean` `default: true`
+#### `resizeIndicator: Boolean`
+> Default: `true`
 
 Enables the resize triangle at the bottom right of a modal when Resizable is enabled.
 
 ---
 
-#### `centerResize: Boolean` `default: true`
+#### `centerResize: Boolean`
+> Default: `true`
 
 Enables automatic centering of the modal when resizing, if disabled modals will resize and remain in a fixed position similar to how Windows applications are resized.
 
 ---
 
 #### `adaptive: Boolean`
+> Default: `false`
 
 Enable responsive behavior, modal will try to adapt to the screen size when possible. Properties `maxHeight`, `maxWidth`, `minHeight`, `minWidth` can set the boundaries for the automatic resizing.
 
 ---
 
 #### `draggable: Boolean | String`
+> Default: `false`
 
 Allows dragging the modal within the boundaries of the screen.
 
@@ -70,6 +81,7 @@ Draggable property can accept string parameter - a CSS selector to **an element 
 ---
 
 #### `scrollable: Boolean`
+> Default: `false`
 
 Enables scroll within the modal when the height of the modal is greater than the screen.
 
@@ -95,42 +107,49 @@ Scrollable content & auto height
 ---
 
 #### `focusTrap: Boolean`
+> Default: `false`
 
 Enables focus trap meaning that only inputs/buttons that are withing the modal window can be focused by pressing Tab (plugin uses very naive implementation of the focus trap)
 
 ---
 
 #### `reset: Boolean`
+> Default: `false`
 
 Resets position and size before showing
 
 ---
 
-#### `clickToClose: Boolean` `default: true`
+#### `clickToClose: Boolean`
+> Default: `true`
 
 If set to `false`, it will not be possible to close modal by clicking on the background or by pressing Esc key.
 
 ---
 
 #### `transition: String`
+> Default: `'vm-transition--modal'`
 
 CSS transition applied to the modal window.
 
 ---
 
 #### `overlayTransition: String`
+> Default: `'vm-transition--overlay'`
 
 CSS transition applied to the overlay (background).
 
 ---
 
 #### `classes: String | Array`
+> Default: `[]`
 
 List of class that will be applied to the modal window (not overlay, just the box).
 
 ---
 
 #### `styles: String | Array | Object`
+> Default: `'''`
 
 Style that will be applied to the modal window.
 
@@ -142,7 +161,8 @@ Vue.js does not allow merging string css definition with an object/array style d
 
 ---
 
-#### `width: String | Number` `default: 600`
+#### `width: String | Number`
+> Default: `600`
 
 Width in pixels or percents (50, "50px", "50%").
 
@@ -155,7 +175,8 @@ If you need to use more value types, please consider contributing to the parser 
 
 ---
 
-#### `height: String | Number` `default: 300`
+#### `height: String | Number`
+> Default: `300`
 
 Height in pixels or percents (50, "50px", "50%") or `"auto"`.
 
@@ -168,69 +189,119 @@ If you need to use more value types, please consider contributing to the parser 
 
 ---
 
-#### `minWidth: Number (pixels)` `default: 0`
+#### `minWidth: Number (pixels)`
+> Default: `0`
 
 The minimum width to which modal can be resized.
 
 ---
 
-#### `minHeight: Number (pixels)` `default: 0`
+#### `minHeight: Number (pixels)`
+> Default: `0`
 
 The minimum height to which modal can be resized.
 
 ---
 
-#### `maxWidth: Number (pixels)` `default: Infinity`
+#### `maxWidth: Number (pixels)`
+> Default: `Infinity`
 
 The maximum width of the modal (if the value is greater than window width, window width will be used instead.
 
 ---
 
-#### `maxHeight: Number (pixels)` `default: Infinity`
+#### `maxHeight: Number (pixels)`
+> Default: `Infinity`
 
 The maximum height of the modal (if the value is greater than window height, window height will be used instead.
 
 ---
 
-#### `shiftX: Number (between 0 and 1.0)` `default: 0.5`
+#### `shiftX: Number (between 0 and 1.0)`
+> Default: `0.5`
 
 Horizontal position in `%`, default is `0.5` (meaning that modal box will be in the middle (50% from left) of the window
 
 ---
 
-#### `shiftY: Number (between 0 and 1.0)` `default: 0.5`
+#### `shiftY: Number (between 0 and 1.0)`
+> Default: `0.5`
 
 Vertical position in `%`, default is `0.5` (meaning that modal box will be in the middle (50% from top) of the window.
 
 ---
 
-#### `loader: Boolean | String | { html: String, ?style: VueStyleBindings }` `default: false`
+#### `loader: Boolean | String | { html: String, ?style: VueStyleBindings }`
+> Default: `false`
 
-> [!NOTE]
-> For async components only.
+::: info
+For async components only.
+:::
 
 By default, no loader is shown when loading async components. You can enable it by setting this property to one of the
 following values:
 - If set to `true`, default loading bars will be shown.
 - If set to a `String`, the text will be shown instead of the default loading bar.
-- If using an object, you can specify your own HTML and CSS styles.
+- If set to an `Object`, you can specify your own HTML and CSS styles.
 
 ---
 
-## Example
+## Examples
 
-```html
+Static modal:
+
+```vue
 <template>
-  <modal name="example"
-         :width="300"
-         :height="300"
-         :adaptive="true">
+  <modal
+    name="example"
+    :width="300"
+    :height="300"
+    :adaptive="true"
+  >
     Hello, Properties!
   </modal>
 </template>
+
 <script>
 export default {
   name: 'ExampleModal'
+}
+</script>
+```
+
+Async modal:
+
+```vue
+<script>
+import { defineAsyncComponent } from 'vue'
+
+const MyAsyncComponent = defineAsyncComponent(async () => import('./components/MyComponent.vue'))
+
+export default {
+name: 'Example',
+  methods: {
+    openModal () {
+      this.$modal.show(
+        MyAsyncComponent,
+        {
+          // additional props to pass to the component
+        },
+        {
+          name: 'my-async-component', // optional
+          height: 'auto',
+          scrollable: true,
+          clickToClose: false,
+          loader: { 
+            html: '<div class="loader">Loading...</div>',
+            style: {
+              color: '#fff',
+              backgroundColor: '#333'
+            }
+          }
+        }
+      )
+    }
+  }
 }
 </script>
 ```
