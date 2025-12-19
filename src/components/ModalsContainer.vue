@@ -8,21 +8,75 @@
   >
     <component
       :is="modal.component"
+      v-if="!modal.modalAttrs.loader"
       v-bind="modal.componentAttrs"
       v-on="modal.componentListeners"
       @close="$modal.hide(modal.modalAttrs.name, $event)"
     />
+    <Suspense
+      v-else
+    >
+      <template #default>
+        <component
+          :is="modal.component"
+          v-bind="modal.componentAttrs"
+          v-on="modal.componentListeners"
+          @close="$modal.hide(modal.modalAttrs.name, $event)"
+        />
+      </template>
+      <template #fallback>
+        <div
+          v-if="typeof modal.modalAttrs.loader === 'string'"
+          style="
+            position: relative;
+            width: 100%;
+            height: 100%;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          "
+          v-text="modal.modalAttrs.loader"
+        ></div>
+
+        <div
+          v-else-if="modal.modalAttrs.loader?.html"
+          :style="modal.modalAttrs.loader?.style"
+          v-html="modal.modalAttrs.loader?.html"
+        ></div>
+
+        <div
+          v-else
+          style="
+            position: relative;
+            width: 100%;
+            height: 100%;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <LoadingBars />
+        </div>
+      </template>
+    </Suspense>
   </modal>
 </template>
 <script>
 import { generateId } from '../utils'
 import { markRaw } from 'vue'
+import LoadingBars from './LoadingBars.vue'
 
 const PREFIX = 'dynamic_modal_'
 
 export default {
+  components: {
+    LoadingBars
+  },
   data() {
     return {
+      isLoadingAsyncComponent: false,
       modals: []
     }
   },
@@ -39,8 +93,18 @@ export default {
   },
   methods: {
     add(component, componentAttrs = {}, modalAttrs = {}, componentListeners = {}) {
+      if (this.isLoadingAsyncComponent) {
+        console.warn('[vue-js-modal] Prevented modal from being opened, because another modal is currently loading.')
+        return
+      }
+
+      this.isLoadingAsyncComponent = true
+
       const id = generateId()
       const name = modalAttrs.name || PREFIX + id
+      const useSuspense = modalAttrs.loader ?? false
+
+      const that = this;
 
       // deprecate modal listeners
       const modalListeners = Object.fromEntries(
@@ -70,7 +134,33 @@ export default {
       })
 
       this.$nextTick(() => {
-        this.$modal.show(name)
+        if (
+          !useSuspense &&
+          component &&
+          typeof component === 'object' &&
+          Object.hasOwn(component, '__asyncLoader') &&
+          component.__asyncLoader
+        ) {
+          try {
+            const modalEventData = {
+              componentListeners,
+              modalAttrs: { name }
+            }
+
+            component.__asyncLoader().then(() => {
+              this.$modal.show(name)
+              this.isLoadingAsyncComponent = false
+            })
+          } catch (error) {
+            console.error(
+              '[vue-js-modal] Failed to load component: "' + name + '"',
+              error
+            )
+          }
+        } else {
+          this.$modal.show(name)
+          this.isLoadingAsyncComponent = false
+        }
       })
     },
     remove(id) {
