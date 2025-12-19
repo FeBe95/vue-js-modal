@@ -14,6 +14,24 @@ Emits after modal became visible or started transition.
 
 ---
 
+#### `@loadstart`
+
+> [!NOTE]
+> For async components only.
+
+Emits as soon as the component has started loading and the loader is shown.
+
+---
+
+#### `@loaded`
+
+> [!NOTE]
+> For async components only.
+
+Emits after the component has finished loading, and the DOM is showing the modal content instead of the loader.
+
+---
+
 #### `@before-close`
 
 Emits before modal is going to be closed. Further closing of the modal can be blocked from this event listener by calling `event.cancel()` .
