@@ -1,7 +1,7 @@
 {
   "name": "@febe95/vue-js-modal",
   "description": "Modal Component for Vue.js",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "author": "febe95 <mail@felix-bernhard.com>",
   "main": "dist/index.js",
   "publishConfig": {
