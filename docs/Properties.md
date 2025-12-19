@@ -204,6 +204,19 @@ Vertical position in `%`, default is `0.5` (meaning that modal box will be in th
 
 ---
 
+#### `loader: Boolean | String | { html: String, ?style: VueStyleBindings }` `default: false`
+
+> [!NOTE]
+> For async components only.
+
+By default, no loader is shown when loading async components. You can enable it by setting this property to one of the
+following values:
+- If set to `true`, default loading bars will be shown.
+- If set to a `String`, the text will be shown instead of the default loading bar.
+- If using an object, you can specify your own HTML and CSS styles.
+
+---
+
 ## Example
 
 ```html
