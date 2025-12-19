@@ -1,4 +1,5 @@
 <template>
+  <div class="card">
     <!-- Modals -->
     <demo-error-modal />
     <demo-login-modal />
@@ -19,16 +20,20 @@
 
     <!-- Other -->
 
-    <pre style="line-height: 1.5;">
-    
-    npm install --save vue-js-modal
+    <h2>Quick Start</h2>
+    <pre>
+      npm install --save vue-js-modal
+    </pre>
 
-    ...
-    import VModal from 'vue-js-modal'
-    Vue.use(VModal)
-  </pre>
+    <pre>
+      import VModal from 'vue-js-modal'
+      app.use(VModal, { ... })
+    </pre>
+  </div>
 
-    <div style="margin-top: 20px; margin-bottom: 15px;">
+  <div class="card">
+    <h2>Examples</h2>
+    <div>
       <button class="btn" @click="$modal.show('example-resizable')">Resizable</button>
       <button class="btn" @click="$modal.show('example-adaptive')">Adaptive</button>
       <button class="btn" @click="$modal.show('example-adaptive-and-auto-height')">Adaptive, Height: auto</button>
@@ -58,8 +63,8 @@
         @click="showDynamicComponentModalWithModalParams"
       >Dynamic: Component Modal with modal params</button>
       <br>
-      <button class="btn" @click="showDynamicRuntimeModalWithEvents">Dynamic: Runtime Modal with events</button>
-      <button class="btn" @click="showDynamicComponentModalWithEvents">Dynamic: Component Modal with events</button>
+      <button class="btn" @click="showDynamicRuntimeModalWithEvents">Custom Events: Runtime Modal</button>
+      <button class="btn" @click="showDynamicComponentModalWithEvents">Custom Events: Component Modal</button>
       <br>
       <button
         class="btn"
@@ -73,6 +78,36 @@
       <button class="btn" @click="showDynamicAsyncComponentModalWithCustomLoadingText">Async Component: custom text</button>
       <button class="btn" @click="showDynamicAsyncComponentModalWithCustomLoadingHtml">Async Component: custom html</button>
     </div>
+  </div>
+
+  <div class="card">
+    <h2>Event Log</h2>
+
+    <pre
+      ref="event-log"
+      style="
+        white-space-collapse: collapse;
+        max-height: 200px;
+        overflow: scroll;
+      "
+    >
+      <template v-for="{ timestamp, data } of receivedEvents" :key="timestamp">
+        {{
+          timestamp.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric', second: 'numeric', fractionalSecondDigits: 3 })
+        }}
+        <template v-if="data?.name && data?.state">
+          [native event data]: {{ data.name }} → "{{ data.state }}"
+        </template>
+        <template v-else>
+          [custom event data]: {{ JSON.stringify(data.replace(/\n+/, ' ')) }}
+        </template>
+        <br>
+        <template v-if="data?.state === 'closed'">
+          <br>
+        </template>
+      </template>
+    </pre>
+  </div>
 </template>
 
 <script>
@@ -126,6 +161,8 @@ export default {
   },
   data() {
     return {
+      receivedEvents: [],
+      asyncComponentBasicLoading: false,
       canBeShown: false
     }
   },
@@ -134,7 +171,33 @@ export default {
       this.canBeShown = !this.canBeShown
     }, 5000)
   },
+  computed: {
+    asyncComponentBasicButtonLabel() {
+      return this.asyncComponentBasicLoading
+        ? 'Loading...'
+        : 'Async Component: basic'
+    }
+  },
+  watch: {
+    receivedEvents: {
+      handler() {
+        this.$nextTick(() => {
+          this.$refs['event-log'].scrollTo({
+            top: this.$refs['event-log'].scrollHeight,
+            behavior: 'smooth'
+          })
+        })
+      },
+      deep: true
+    }
+  },
   methods: {
+    logReceivedEvent(event) {
+      this.receivedEvents.push({
+        timestamp: new Date(),
+        data: event
+      })
+    },
     conditionalShow() {
       this.$modal.show('conditional-modal', {
         show: this.canBeShown
@@ -261,9 +324,9 @@ export default {
           methods: {
             sendData() {
               this.$emit('my-event', 'This message was sent via `this.$emit()`')
-              this.$parent.$emit('my-event', 'This message was sent via `this.$parent.$emit()`')
-              this.$parent.$parent.$emit('my-event', 'This message was sent via `this.$parent.$parent.$emit()`')
-              this.$parent.$parent.$parent.$emit('my-event', 'This message was sent via `this.$parent.$parent.$parent.$emit()`')
+              this.$parent.$emit('my-event', 'This message was sent via `this.$parent.$emit()`.\n\n⚠️ This is DEPRECATED ⚠️')
+              this.$parent.$parent.$emit('my-event', 'This message was sent via `this.$parent.$parent.$emit()`.\n\n⚠️ This is DEPRECATED ⚠️')
+              this.$parent.$parent.$parent.$emit('my-event', 'This message was sent via `this.$parent.$parent.$parent.$emit()`.\n\n⚠️ This is DEPRECATED ⚠️')
             }
           }
         },
@@ -272,7 +335,10 @@ export default {
           height: 'auto'
         },
         {
-          'my-event': (data) => alert(JSON.stringify(data))
+          'my-event': (event) => {
+            this.logReceivedEvent(event)
+            setTimeout(() => alert(event), 100)
+          }
         }
       )
     },
@@ -285,7 +351,10 @@ export default {
           height: 'auto'
         },
         {
-          'my-event': (data) => alert(data)
+          'my-event': (event) => {
+            this.logReceivedEvent(event)
+            setTimeout(() => alert(event), 100)
+          }
         }
       )
     },
@@ -300,6 +369,17 @@ export default {
         },
         {
           height: 'auto'
+        },
+        {
+          loadstart: this.logReceivedEvent,
+          loaded: this.logReceivedEvent,
+          'before-open': (event) => {
+            this.asyncComponentBasicLoading = false
+            this.logReceivedEvent(event)
+          },
+          opened: this.logReceivedEvent,
+          'before-close': this.logReceivedEvent,
+          closed: this.logReceivedEvent
         }
       )
     },
@@ -313,6 +393,14 @@ export default {
         {
           height: 'auto',
           loader: true
+        },
+        {
+          'before-open': this.logReceivedEvent,
+          loadstart: this.logReceivedEvent,
+          opened: this.logReceivedEvent,
+          loaded: this.logReceivedEvent,
+          'before-close': this.logReceivedEvent,
+          closed: this.logReceivedEvent
         }
       )
     },
@@ -325,6 +413,14 @@ export default {
         },
         {
           loader: 'Loading...'
+        },
+        {
+          'before-open': this.logReceivedEvent,
+          loadstart: this.logReceivedEvent,
+          opened: this.logReceivedEvent,
+          loaded: this.logReceivedEvent,
+          'before-close': this.logReceivedEvent,
+          closed: this.logReceivedEvent
         }
       )
     },
@@ -361,6 +457,14 @@ export default {
               alignItems: 'center'
             }
           }
+        },
+        {
+          'before-open': this.logReceivedEvent,
+          loadstart: this.logReceivedEvent,
+          opened: this.logReceivedEvent,
+          loaded: this.logReceivedEvent,
+          'before-close': this.logReceivedEvent,
+          closed: this.logReceivedEvent
         }
       )
     },
@@ -398,11 +502,21 @@ pre {
   color: #595959;
   background-color: #f3f3f3;
   border: 1px solid #eee;
+  line-height: 1.5;
+  white-space: pre-line;
+  padding: 1rem;
 }
 
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+}
+
+.card {
   color: #6b7c93;
 
   background: #f6f9fc;
@@ -415,6 +529,7 @@ pre {
 h1,
 h2 {
   font-weight: normal;
+  margin-top: 0;
 
   a {
     font-size: 12px;
@@ -469,6 +584,11 @@ button.btn {
       background: mix(#f21368, black, 95%);
     }
   }
+}
+
+button:disabled {
+  opacity: 0.75;
+  pointer-events: none;
 }
 
 .example-modal-content {
