@@ -60,10 +60,23 @@
       <br>
       <button class="btn" @click="showDynamicRuntimeModalWithEvents">Dynamic: Runtime Modal with events</button>
       <button class="btn" @click="showDynamicComponentModalWithEvents">Dynamic: Component Modal with events</button>
+      <br>
+      <button
+        class="btn"
+        style="min-width: 206px; white-space: nowrap;"
+        :disabled="asyncComponentBasicLoading ? 'disabled' : null"
+        @click="showDynamicAsyncComponentModal"
+      >
+        {{ asyncComponentBasicButtonLabel }}
+      </button>
+      <button class="btn" @click="showDynamicAsyncComponentModalWithDefaultLoadingBars">Async Component: default loading bars</button>
+      <button class="btn" @click="showDynamicAsyncComponentModalWithCustomLoadingText">Async Component: custom text</button>
+      <button class="btn" @click="showDynamicAsyncComponentModalWithCustomLoadingHtml">Async Component: custom html</button>
     </div>
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue'
 import DemoAdaptiveModal from './components/Modal_Adaptive.vue'
 import DemoAdaptiveAndAutoHeightModal from './components/Modal_AdaptiveAndAutoHeight.vue'
 import DemoDraggableModal from './components/Modal_Draggable.vue'
@@ -75,6 +88,28 @@ import DemoDogProfileModal from './components/Modal_Dogge.vue'
 import DemoSizeModal from './components/Modal_Autosize.vue'
 import DemoCustomComponent from './components/Modal_CustomComponent.vue'
 import ModalCustomComponentWithEvents from './components/Modal_CustomComponentWithEvents.vue'
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+
+const DemoCustomComponentAsync = defineAsyncComponent(async () => {
+  await sleep(2000) // artificial delay: 1 seconds
+  return import('./components/Modal_CustomComponent.vue')
+})
+
+const DemoCustomComponentAsyncWithDefaultLoadingBars = defineAsyncComponent(async () => {
+  await sleep(2000) // artificial delay: 2 seconds
+  return import('./components/Modal_CustomComponent.vue')
+})
+
+const DemoCustomComponentAsyncWithCustomHtml = defineAsyncComponent(async () => {
+  await sleep(2000) // artificial delay: 2 seconds
+  return import('./components/Modal_CustomComponent.vue')
+})
+
+const DemoCustomComponentAsyncWithCustomText = defineAsyncComponent(async () => {
+  await sleep(2000) // artificial delay: 2 seconds
+  return import('./components/Modal_CustomComponent.vue')
+})
 
 export default {
   name: 'app',
@@ -251,6 +286,81 @@ export default {
         },
         {
           'my-event': (data) => alert(data)
+        }
+      )
+    },
+
+    showDynamicAsyncComponentModal() {
+      this.asyncComponentBasicLoading = true
+
+      this.$modal.show(
+        DemoCustomComponentAsync,
+        {
+          text: 'I was loaded asynchronously. Loading took ~2 seconds (the first time only).'
+        },
+        {
+          height: 'auto'
+        }
+      )
+    },
+
+    showDynamicAsyncComponentModalWithDefaultLoadingBars() {
+      this.$modal.show(
+        DemoCustomComponentAsyncWithDefaultLoadingBars,
+        {
+          text: 'I was loaded asynchronously using <Suspense>!'
+        },
+        {
+          height: 'auto',
+          loader: true
+        }
+      )
+    },
+
+    showDynamicAsyncComponentModalWithCustomLoadingText() {
+      this.$modal.show(
+        DemoCustomComponentAsyncWithCustomText,
+        {
+          text: 'I was loaded asynchronously with a custom loading text!'
+        },
+        {
+          loader: 'Loading...'
+        }
+      )
+    },
+
+    showDynamicAsyncComponentModalWithCustomLoadingHtml() {
+      this.$modal.show(
+        DemoCustomComponentAsyncWithCustomHtml,
+        {
+          text: 'I was loaded asynchronously with a custom loading html!'
+        },
+        {
+          loader: {
+            html: `
+              <div style="text-align: center">
+                <h3>Loading</h3>
+                <p>
+                  <span>Please wait...</span>
+                </p>
+                <p>
+                  <img width="128" src="/static/cute_dog.gif" />
+                </p>
+              </div>
+            `,
+            style: {
+              color: 'red',
+
+              // Center text horizontally and vertically
+              position: 'relative',
+              width: '100%',
+              height: '100%',
+              padding: '2rem',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }
+          }
         }
       )
     },
