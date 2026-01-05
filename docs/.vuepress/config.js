@@ -12,6 +12,7 @@ export default defineUserConfig({
   title: 'Vue.js Modal (Vue 3)',
   head,
   port: 8081,
+  open: true,
   description: 'Simple, flexible, Vue.js modal plugin',
   plugins: [searchPlugin()],
   theme: defaultTheme({
