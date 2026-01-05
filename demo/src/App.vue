@@ -440,7 +440,7 @@ export default {
                   <span>Please wait...</span>
                 </p>
                 <p>
-                  <img width="128" src="/static/cute_dog.gif" />
+                  <img width="128" src="../static/cute_dog.gif" alt="Cute Dog" />
                 </p>
               </div>
             `,

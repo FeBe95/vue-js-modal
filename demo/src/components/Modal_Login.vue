@@ -85,7 +85,7 @@ $facebook_color: #3880ff;
     width: 50%;
 
     &#bp-right {
-      background: url('/static/panorama.jpg') no-repeat top left;
+      background: url('../../static/panorama.jpg') no-repeat top left;
       border-left: 1px solid #eee;
     }
   }

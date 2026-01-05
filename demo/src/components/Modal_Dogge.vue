@@ -14,7 +14,7 @@
         Slot for close button
       </div>
     </template>
-    <img src="/static/cute_dog.gif" />
+    <img src="../../static/cute_dog.gif" alt="Cute Dog" />
   </modal>
 </template>
 <script>
