@@ -106,8 +106,19 @@ export default {
   methods: {
     openModal () {
       this.$modal.show({
-        template: `<span>Hello, {{ name }}!</span>`,
-        props: ['name']
+        template: `
+            <div class="example-modal-content">
+              <span>Hello, {{ name }}!</span>
+              <button @click="sendData">Send data to parent</button>
+            </div>
+          `,
+        props: ['name'],
+        emits: ['my-custom-event'],
+        methods: {
+          sendData() {
+            this.$emit('my-custom-event', { data: 'Hello World!' })
+          }
+        }
       }, {
         name: this.name
       }, {
@@ -115,7 +126,8 @@ export default {
         height: 300
       }, {
         'before-open': this.beforeOpen,
-        'before-close': this.beforeClose
+        'before-close': this.beforeClose,
+        'my-custom-event': this.handleCustomEvent
       })
     },
     beforeOpen (event) {
@@ -127,6 +139,9 @@ export default {
       if (Math.random() < 0.5) {
         event.cancel()
       }
+    },
+    handleCustomEvent (data) {
+      console.log(data)
     }
   }
 }
