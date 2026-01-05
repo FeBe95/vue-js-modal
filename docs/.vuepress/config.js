@@ -3,6 +3,7 @@ import { defineUserConfig } from 'vuepress'
 import { defaultTheme } from '@vuepress/theme-default'
 import { searchPlugin } from '@vuepress/plugin-search'
 import sidebar from './sidebar'
+import navbar from './navbar'
 import head from './head'
 
 export default defineUserConfig({
@@ -15,14 +16,6 @@ export default defineUserConfig({
   plugins: [searchPlugin()],
   theme: defaultTheme({
     sidebar,
-    navbar: [
-      { text: 'Github', link: 'https://github.com/febe95/vue-js-modal' },
-      { text: 'Vue 2', link: 'https://euvl.github.io/vue-js-modal/' },
-      {
-        text: 'Demo',
-        link: 'https://febe95.github.io/vue-js-modal/demo/',
-        // target: '_self'
-      }
-    ]
+    navbar
   })
 })
