@@ -11,7 +11,7 @@ cd ..
 # copy demo files to vuepress public dir
 mkdir -p docs/.vuepress/public/demo/dist
 cp demo/index.html docs/.vuepress/public/demo/index.html
-cp demo/dist/build.js docs/.vuepress/public/demo/dist/build.js
+cp -r demo/dist docs/.vuepress/public/demo/
 
 # build
 npm run docs:build
