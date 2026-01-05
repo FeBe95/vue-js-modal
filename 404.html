@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="generator" content="VuePress 2.0.0-rc.23" />
+    <style>
+      :root {
+        --vp-c-bg: #fff;
+      }
+
+      [data-theme='dark'] {
+        --vp-c-bg: #1b1b1f;
+      }
+
+      html,
+      body {
+        background-color: var(--vp-c-bg);
+      }
+    </style>
+    <script>
+      const useChoice = localStorage.getItem('vuepress-color-scheme')
+      const systemStatus =
+        'matchMedia' in window
+          ? window.matchMedia('(prefers-color-scheme: dark)').matches
+          : false
+
+      if (useChoice === 'light') {
+        document.documentElement.dataset.theme = 'light'
+      } else if (useChoice === 'dark' || systemStatus) {
+        document.documentElement.dataset.theme = 'dark'
+      }
+    </script>
+    <link rel="icon" type="image/x-icon" href="images/icons/favicon.ico"><link rel="icon" type="image/png" sizes="16x16" href="images/icons/favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="images/icons/favicon-32x32.png"><title>Vue.js Modal (Vue 3)</title><meta name="description" content="Simple, flexible, Vue.js modal plugin">
+    <link rel="stylesheet" href="/vue-js-modal/assets/css/styles.8a86dffd.css">
+    <link rel="preload" href="/vue-js-modal/assets/js/runtime~app.65cc7570.js" as="script"><link rel="preload" href="/vue-js-modal/assets/css/styles.8a86dffd.css" as="style"><link rel="preload" href="/vue-js-modal/assets/js/831.320320aa.js" as="script"><link rel="preload" href="/vue-js-modal/assets/js/app.d665325f.js" as="script">
+    <link rel="prefetch" href="/vue-js-modal/demo/dist/build.js" as="script"><link rel="prefetch" href="/vue-js-modal/assets/js/Events.html.20182d2a.js" as="script"><link rel="prefetch" href="/vue-js-modal/assets/js/Properties.html.91d214d1.js" as="script"><link rel="prefetch" href="/vue-js-modal/assets/js/Intro.html.564a9461.js" as="script"><link rel="prefetch" href="/vue-js-modal/assets/js/Usage.html.2b419da4.js" as="script"><link rel="prefetch" href="/vue-js-modal/assets/js/Installation.html.a0193ede.js" as="script"><link rel="prefetch" href="/vue-js-modal/assets/js/Other.html.30417f51.js" as="script"><link rel="prefetch" href="/vue-js-modal/assets/js/Slots.html.7b61d1e4.js" as="script"><link rel="prefetch" href="/vue-js-modal/assets/js/index.html.11b2768b.js" as="script"><link rel="prefetch" href="/vue-js-modal/assets/js/Examples.html.fd66c67b.js" as="script"><link rel="prefetch" href="/vue-js-modal/assets/js/404.html.05def706.js" as="script">
+  </head>
+  <body>
+    <div id="app"><!--[--><div class="vp-theme-container" vp-container data-v-7df7e1dd><main class="page" data-v-7df7e1dd><div vp-content data-v-7df7e1dd><h1 data-v-7df7e1dd>404</h1><blockquote data-v-7df7e1dd>There&#39;s nothing here.</blockquote><a class="route-link" href="/vue-js-modal/" data-v-7df7e1dd>Take me home</a></div></main></div><!--[--><!----><!--]--><!--]--></div>
+    <script src="/vue-js-modal/assets/js/runtime~app.65cc7570.js" defer></script><script src="/vue-js-modal/assets/js/831.320320aa.js" defer></script><script src="/vue-js-modal/assets/js/app.d665325f.js" defer></script>
+  </body>
+</html>
