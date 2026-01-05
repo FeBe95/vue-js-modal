@@ -50,6 +50,10 @@ Emits after the component has finished loading, and the DOM is showing the modal
 
 Opening and closing can be canceled by calling `event.cancel()` function in either `before-open` or `before-close` event handlers.
 
+## Custom events
+
+You can pass data from dynamic modals back to the parent component by emitting custom events.
+Simply call `this.$emit('my-custom-event', data)` from the modal component.
 
 ## Examples
 
