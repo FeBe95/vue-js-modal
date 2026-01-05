@@ -12,7 +12,10 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
+    publicPath:
+      process.env.NODE_ENV === 'production'
+        ? '/vue-js-modal/demo/dist/'
+        : '/dist/',
     filename: 'build.js'
   },
   module: {
