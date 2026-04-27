@@ -257,7 +257,7 @@ export default {
         const [entry] = entries
 
         requestAnimationFrame(() => {
-          this.modal.renderedHeight = entry.contentRect.height
+          this.modal.renderedHeight = Math.ceil(entry.contentRect.height)
         })
       }
     })
