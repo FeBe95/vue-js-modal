@@ -4,6 +4,7 @@ export declare interface VueJSModalOptions {
   componentName?: string
   dialog?: boolean
   dialogComponentName?: string
+  devtools?: boolean
   dynamicDefaults?: object
 }
 

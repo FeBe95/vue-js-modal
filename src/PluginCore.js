@@ -42,6 +42,37 @@ const PluginCore = (app, options = {}) => {
     )
   }
 
+  const patchVueRenderer = (instance, vNode) => {
+    if (!instance || instance.rendererAlreadyPatched) {
+      return
+    }
+
+    const originalRender = instance.render
+
+    instance.render = function (...args) {
+      const result = originalRender?.apply(this, args)
+
+      if (!result?.children || !result?.children.length) {
+        result.children = []
+      }
+
+      result?.children.push(vNode)
+      return result
+    }
+
+    instance.rendererAlreadyPatched = true
+  }
+
+  const walkTreeAndPush = (treeNode, vNode) => {
+    if (!treeNode) return
+
+    if (treeNode.component) {
+      walkTreeAndPush(treeNode.component.subTree, vNode)
+    } else if (treeNode.children?.length) {
+      treeNode.children.push(vNode)
+    }
+  }
+
   /**
    * Creates a container for modals in the root Vue component.
    */
@@ -54,6 +85,35 @@ const PluginCore = (app, options = {}) => {
     vNode.appContext = app._context
 
     render(vNode, element)
+
+    if (!options.devtools) {
+      return
+    }
+
+    let rootInstance = app._instance
+
+    // AsyncComponentWrapper instances will be available here.
+    // We can push the vNode to the tree directly.
+    if (rootInstance !== null) {
+      walkTreeAndPush(rootInstance.subTree, vNode)
+      return
+    }
+
+    // Classic synchronous components are not yet available here.
+    // We need to wait for the root instance to be set and patch it.
+    Object.defineProperty(app, '_instance', {
+      get() {
+        return rootInstance
+      },
+      set(newInstance) {
+        if (newInstance === app._instance) return
+        if (newInstance?.parent !== null) return
+
+        patchVueRenderer(newInstance, vNode)
+
+        rootInstance = newInstance
+      }
+    })
   }
 
   const show = (...args) => {
