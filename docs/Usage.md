@@ -37,6 +37,18 @@ app.use(VModal, { componentName: 'Foo' })
 ---
 
 
+#### `devtools: Boolean`
+
+Toggles **experimental** support for [vuejs/devtools](https://github.com/vuejs/devtools). When enabled, the modal container with all of its modals will be shown in the component tree of the devtools panel. 
+
+```js
+app.use(VModal, { devtools: true })
+```
+
+
+---
+
+
 #### `dynamicDefaults: object`
 
 Default properties that are injected into dynamic modals. 
