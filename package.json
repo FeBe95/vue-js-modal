@@ -39,7 +39,7 @@
     "lint:js:fix": "npm run lint:js -- --fix",
     "test": "jest",
     "build": "npm run build:client && npm run build:client-no-css && npm run build:ssr && npm run build:ssr-no-css",
-    "watch": "webpack --config ./config/webpack.client.config.js --progress --watch",
+    "watch": "webpack --config ./config/webpack.watch.config.js --progress --watch",
     "test:types": "tsc -p types/test",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
