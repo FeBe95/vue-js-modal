@@ -86,6 +86,10 @@ const PluginCore = (app, options = {}) => {
 
     render(vNode, element)
 
+    if (!options.devtools) {
+      return
+    }
+
     let rootInstance = app._instance
 
     // AsyncComponentWrapper instances will be available here.
