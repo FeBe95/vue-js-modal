@@ -5,7 +5,7 @@ const { VueLoaderPlugin } = require('vue-loader')
 const webpack = require('webpack')
 
 module.exports = {
-  mode: 'production',
+  mode: process.env.NODE_ENV === 'development' ? 'development' : 'production',
   entry: './src/main.js',
   performance: {
     hints: false
