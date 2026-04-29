@@ -73,6 +73,7 @@ import LoadingBars from './LoadingBars.vue'
 const PREFIX = 'dynamic_modal_'
 
 export default {
+  name: 'ModalsContainer',
   components: {
     LoadingBars
   },
