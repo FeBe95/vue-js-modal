@@ -67,6 +67,7 @@ const PluginCore = (app, options = {}) => {
     if (!treeNode) return
 
     if (treeNode.component) {
+      patchVueRenderer(treeNode.component, vNode)
       walkTreeAndPush(treeNode.component.subTree, vNode)
     } else if (treeNode.children?.length) {
       treeNode.children.push(vNode)
